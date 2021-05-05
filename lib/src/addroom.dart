@@ -22,8 +22,9 @@ class adroomState extends State<adroom> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController roomno = TextEditingController();
   TextEditingController monthlyfee = TextEditingController();
-  TextEditingController deposit = TextEditingController();
+  /* TextEditingController deposit = TextEditingController();
   TextEditingController advance = TextEditingController();
+  */
   TextEditingController security = TextEditingController();
   TextEditingController minwaterb = TextEditingController();
   TextEditingController minelectricb = TextEditingController();
@@ -202,7 +203,7 @@ class adroomState extends State<adroom> {
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 25),
-                                      controller: deposit,
+                                      controller: monthlyfee,
                                     ),
                                   ),
                                 ),
@@ -235,7 +236,7 @@ class adroomState extends State<adroom> {
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 25),
-                                      controller: advance,
+                                      controller: monthlyfee,
                                     ),
                                   ),
                                 ),
@@ -459,8 +460,8 @@ class adroomState extends State<adroom> {
     var result = await http.post(url, body: {
       "roomno": roomno.text,
       "monthlyfee": monthlyfee.text,
-      "deposit": deposit.text,
-      "advance": advance.text,
+      "deposit": monthlyfee.text,
+      "advance": monthlyfee.text,
       "security": security.text,
       "minwaterb": minwaterb.text,
       "minelectricb": minelectricb.text,

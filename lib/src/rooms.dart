@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:payrent/src/roomdel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'landloardhome.dart';
@@ -235,7 +236,7 @@ class ItemList extends StatelessWidget {
                                     Navigator.of(context).push(
                                         new MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                new Delete(
+                                                new Roomdelete(
                                                   list: list,
                                                   index: i,
                                                 )));

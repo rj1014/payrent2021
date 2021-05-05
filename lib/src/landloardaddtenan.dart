@@ -17,7 +17,7 @@ class ladlordadd extends StatefulWidget {
   ladlordadd({this.list, this.index, this.value});
 
   @override
-  _ladlordaddState createState() => new _ladlordaddState(this.value);
+  _ladlordaddState createState() => new _ladlordaddState(value);
 }
 
 class _ladlordaddState extends State<ladlordadd> {
@@ -40,7 +40,7 @@ class _ladlordaddState extends State<ladlordadd> {
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
   TextEditingController username = TextEditingController();
-  TextEditingController contact_num = TextEditingController();
+  TextEditingController contactnum = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController date_occupancy = TextEditingController();
   @override
@@ -312,7 +312,7 @@ class _ladlordaddState extends State<ladlordadd> {
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 25),
-                                      controller: contact_num,
+                                      controller: contactnum,
                                     ),
                                   ),
                                 ),
@@ -406,12 +406,12 @@ class _ladlordaddState extends State<ladlordadd> {
   }
 
   void add() async {
-    var url = Uri.parse("https://payrent000.000webhostapp.com/addtenant.php");
+    var url = Uri.parse("https://payrent000.000webhostapp.com/addroom.php");
     var result = await http.post(url, body: {
       "room_no": '${widget.list[widget.index]['room_no']}',
       "fname": firstname.text,
       "lname": lastname.text,
-      "contact_number": contact_num.text,
+      "contactnum": contactnum.text,
       "password": password.text,
       "username": username.text,
       "date_occupancy": date_occupancy.text,
@@ -424,8 +424,8 @@ class _ladlordaddState extends State<ladlordadd> {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Username Exist!"),
-            content: new Text("Try another Username"),
+            title: new Text("username Exist!"),
+            content: new Text("Try another username"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(

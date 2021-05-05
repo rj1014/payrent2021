@@ -2,13 +2,18 @@ import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:payrent/src/Login_Page.dart';
+import 'package:payrent/src/addbill.dart';
+import 'package:payrent/src/addroom.dart';
+import 'package:payrent/src/currentbills.dart';
 import 'package:payrent/src/delete.dart';
-import 'package:payrent/src/tenant_history.dart';
+import 'package:payrent/src/editrooms.dart';
+import 'package:payrent/src/edittenants%20copy.dart';
+import 'package:payrent/src/landloardaddtenan.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:payrent/src/viewprofile.dart';
+import 'package:payrent/src/tenant_history.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'landloardhome.dart';
@@ -16,6 +21,8 @@ import 'landloardhome.dart';
 class ladlordviewacc extends StatefulWidget {
   ladlordviewaccState createState() => ladlordviewaccState();
 
+  List list;
+  int index;
   bool loading = false;
   String userid;
   String path;
@@ -27,7 +34,7 @@ class ladlordviewaccState extends State<ladlordviewacc> {
   String userid;
 
   Future<List> getData() async {
-    var urls = Uri.parse("https://payrent000.000webhostapp.com/getprofile.php");
+    var urls = Uri.parse("https://payrent000.000webhostapp.com/gettenant.php");
     final response = await http.post(urls, body: {});
     return data = json.decode(response.body);
   }
@@ -42,16 +49,11 @@ class ladlordviewaccState extends State<ladlordviewacc> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green[200],
-          title: Text("Select a Tenant"),
+          title: Text("Tenants"),
           centerTitle: true,
         ),
         drawer: Drawer(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
-
           child: ListView(
-            // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
@@ -165,9 +167,7 @@ class ItemList extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Tenant Username : ${list[i]['username']}"),
-                        Text(
-                            "Tenant Name : ${list[i]['fname']} ${list[i]['lname']} "),
+                        Text("Name : ${list[i]['fname']} ${list[i]['lname']}"),
                         Text("Pad Number : ${list[i]['room_no']}"),
                       ],
                     ),
@@ -179,16 +179,16 @@ class ItemList extends StatelessWidget {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: <Widget>[
                             new RaisedButton.icon(
-                                icon: FaIcon(FontAwesomeIcons.listAlt),
-                                label: new Text("History"),
+                                icon: FaIcon(FontAwesomeIcons.pencilAlt),
+                                label: new Text("Edit"),
                                 color: Colors.green[200],
                                 onPressed: () {
                                   Navigator.of(context).push(
                                       new MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              new Tenant_history(
+                                              new edittenant(
                                                 list: list,
                                                 index: i,
                                               )));
@@ -200,30 +200,40 @@ class ItemList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             new RaisedButton.icon(
-                                icon: FaIcon(FontAwesomeIcons.user),
-                                label: new Text("Profile"),
-                                color: Colors.green[200],
+                                icon: FaIcon(FontAwesomeIcons.userAlt),
+                                label: new Text("History"),
+                                color: Colors.green[300],
                                 onPressed: () {
                                   Navigator.of(context).push(
                                       new MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              new Profile(
+                                              new Tenant_history(
                                                 list: list,
                                                 index: i,
                                               )));
                                 }),
                           ],
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            new RaisedButton.icon(
-                                icon: FaIcon(FontAwesomeIcons.sms),
-                                label: new Text("Message"),
-                                color: Colors.green[200],
-                                onPressed: usr),
-                          ],
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              new RaisedButton.icon(
+                                  icon: FaIcon(FontAwesomeIcons.trashAlt),
+                                  label: new Text("Delete"),
+                                  color: Colors.red[400],
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        new MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                new Delete(
+                                                  list: list,
+                                                  index: i,
+                                                )));
+                                  }),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -234,12 +244,13 @@ class ItemList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         new RaisedButton.icon(
-                            icon: FaIcon(FontAwesomeIcons.trashAlt),
-                            label: new Text("Delete"),
-                            color: Colors.red[400],
+                            icon: FaIcon(FontAwesomeIcons.clock),
+                            label: new Text("Current Bill"),
+                            color: Colors.red[100],
                             onPressed: () {
                               Navigator.of(context).push(new MaterialPageRoute(
-                                  builder: (BuildContext context) => new Delete(
+                                  builder: (BuildContext context) =>
+                                      new Currentbill(
                                         list: list,
                                         index: i,
                                       )));

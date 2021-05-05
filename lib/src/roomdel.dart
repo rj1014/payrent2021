@@ -65,7 +65,7 @@ class RoomdeleteState extends State<Roomdelete> {
         ? loadingPage()
         : Scaffold(
             appBar: new AppBar(
-              title: new Text("Delete Tenant"),
+              title: new Text("Delete Room"),
               backgroundColor: Colors.green[200],
               centerTitle: true,
             ),
@@ -98,12 +98,8 @@ class RoomdeleteState extends State<Roomdelete> {
                       ],
                     ),
                     new Text(
-                      "Tenan Name : ${widget.list[widget.index]['fname']} ${widget.list[widget.index]['lname']}",
+                      "Room Number : ${widget.list[widget.index]['room_no']}",
                       style: new TextStyle(fontSize: 20.0),
-                    ),
-                    new Text(
-                      "Tenant Username : ${widget.list[widget.index]['username']}",
-                      style: new TextStyle(fontSize: 18.0),
                     ),
                     new Padding(
                       padding: const EdgeInsets.only(top: 30.0),

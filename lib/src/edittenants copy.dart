@@ -10,55 +10,59 @@ import 'package:http/http.dart' as http;
 
 // import 'home_page.dart';
 
-class editroom extends StatefulWidget {
+class edittenant extends StatefulWidget {
   List list;
   int index;
   String value;
-  editroom({this.list, this.index, this.value});
+  edittenant({this.list, this.index, this.value});
   @override
-  editroomState createState() => new editroomState(value);
+  edittenantState createState() => new edittenantState(value);
 }
 
-class editroomState extends State<editroom> {
+class edittenantState extends State<edittenant> {
   String value;
   List data = [];
-  editroomState(this.value);
+  edittenantState(this.value);
   bool loading = false;
   Future<List> getData() async {
-    var urls = Uri.parse("https://payrent000.000webhostapp.com/updateroom.php");
-    final response = await http.post(urls, body: {"room_no": value});
+    var urls = Uri.parse("https://payrent000.000webhostapp.com/gettenant.php");
+    final response = await http.post(urls, body: {"username": value});
     return data = json.decode(response.body);
   }
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController room_fee = TextEditingController();
-  TextEditingController initial_electric_reading = TextEditingController();
-  TextEditingController initial_water_reading = TextEditingController();
-  TextEditingController deposit = TextEditingController();
-  TextEditingController advance = TextEditingController();
-  TextEditingController security_deposit = TextEditingController();
-  TextEditingController minwaterbill = TextEditingController();
-  TextEditingController minelectricbill = TextEditingController();
+  TextEditingController fname = TextEditingController();
+  TextEditingController lname = TextEditingController();
+  TextEditingController contactnum = TextEditingController();
+  TextEditingController joinfname = TextEditingController();
+  TextEditingController joinlname = TextEditingController();
+  TextEditingController joinCnum = TextEditingController();
+  TextEditingController emailadd = TextEditingController();
+  TextEditingController street = TextEditingController();
+  TextEditingController barangay = TextEditingController();
+  TextEditingController city = TextEditingController();
 
   @override
   void initState() {
-    room_fee =
-        new TextEditingController(text: widget.list[widget.index]['room_fee']);
-    advance =
-        new TextEditingController(text: widget.list[widget.index]['advance']);
-    deposit =
-        new TextEditingController(text: widget.list[widget.index]['deposit']);
-    security_deposit = new TextEditingController(
-        text: widget.list[widget.index]['security_deposit']);
-    minwaterbill = new TextEditingController(
-        text: widget.list[widget.index]['minwaterbill']);
-    minelectricbill = new TextEditingController(
-        text: widget.list[widget.index]['minelectricbill']);
-    initial_water_reading = new TextEditingController(
-        text: widget.list[widget.index]['initial_water_reading']);
-    initial_electric_reading = new TextEditingController(
-        text: widget.list[widget.index]['initial_electric_reading']);
-    // print(productprice);
+    fname = new TextEditingController(text: widget.list[widget.index]['fname']);
+    lname = new TextEditingController(text: widget.list[widget.index]['lname']);
+    contactnum = new TextEditingController(
+        text: widget.list[widget.index]['contact_number']);
+    /*joinfname = new TextEditingController(
+        text: widget.list[widget.index]['joinfname']);
+    joinlname = new TextEditingController(
+        text: widget.list[widget.index]['joinlname']);
+    joinCnum = new TextEditingController(
+        text: widget.list[widget.index]['joinCnum']);
+    emailadd = new TextEditingController(
+        text: widget.list[widget.index]['emailadd']);
+    street = new TextEditingController(
+        text: widget.list[widget.index]['street']);
+    barangay = new TextEditingController(
+        text: widget.list[widget.index]['barangay']);
+    city = new TextEditingController(
+        text: widget.list[widget.index]['city']);
+    */ // print(productprice);
     super.initState();
   }
 
@@ -69,7 +73,8 @@ class editroomState extends State<editroom> {
         ? loadingPage()
         : Scaffold(
             appBar: AppBar(
-              title: Text('Pad Number ${widget.list[widget.index]['room_no']}'),
+              title: Text(
+                  ' ${widget.list[widget.index]['fname']} ${widget.list[widget.index]['lname']}'),
               centerTitle: true,
               backgroundColor: Colors.green[200],
             ),
@@ -160,15 +165,15 @@ class editroomState extends State<editroom> {
                                         },
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
-                                          labelText: 'Monthly Fee',
+                                          labelText: 'First Name',
                                           labelStyle: textStyle,
-                                          icon: Icon(Icons.phone,
-                                              color: Colors.pink),
+                                          icon: FaIcon(FontAwesomeIcons.user,
+                                              color: Colors.blueGrey),
                                         ),
                                         cursorColor: Colors.blueAccent,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 25),
-                                        controller: room_fee),
+                                        controller: fname),
                                   ),
                                 ),
                               )
@@ -192,15 +197,114 @@ class editroomState extends State<editroom> {
                                       },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        labelText: '1 Month Deposit',
+                                        labelText: 'Last Name',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.user,
+                                            color: Colors.blueGrey),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 25),
-                                      controller: deposit,
+                                      controller: lname,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          new Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 50.0, right: 50.0, top: 10.0),
+                                  child: new Container(
+                                    alignment: Alignment.center,
+                                    height: 70.0,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return 'Required';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Street',
+                                        labelStyle: textStyle,
+                                        icon: FaIcon(FontAwesomeIcons.home,
+                                            color: Colors.blueGrey),
+                                      ),
+                                      cursorColor: Colors.blueAccent,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 25),
+                                      controller: street,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          new Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 50.0, right: 50.0, top: 10.0),
+                                  child: new Container(
+                                    alignment: Alignment.center,
+                                    height: 70.0,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return 'Required';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Barangay',
+                                        labelStyle: textStyle,
+                                        icon: FaIcon(FontAwesomeIcons.city,
+                                            color: Colors.blueGrey),
+                                      ),
+                                      cursorColor: Colors.blueAccent,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 25),
+                                      controller: barangay,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          new Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 50.0, right: 50.0, top: 10.0),
+                                  child: new Container(
+                                    alignment: Alignment.center,
+                                    height: 70.0,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return 'Required';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'City',
+                                        labelStyle: textStyle,
+                                        icon: FaIcon(FontAwesomeIcons.city,
+                                            color: Colors.blueGrey),
+                                      ),
+                                      cursorColor: Colors.blueAccent,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 25),
+                                      controller: city,
                                     ),
                                   ),
                                 ),
@@ -225,15 +329,52 @@ class editroomState extends State<editroom> {
                                       },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        labelText: '1 Month Advance',
+                                        labelText: 'Email Add',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.mailBulk,
+                                            color: Colors.blueGrey),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 25),
-                                      controller: advance,
+                                      controller: emailadd,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Text(
+                            "   Joiner's Name",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                          new Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 50.0, right: 50.0, top: 10.0),
+                                  child: new Container(
+                                    alignment: Alignment.center,
+                                    height: 70.0,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return 'Enter Number';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'First Name',
+                                        labelStyle: textStyle,
+                                        icon: FaIcon(FontAwesomeIcons.user,
+                                            color: Colors.blueGrey),
+                                      ),
+                                      cursorColor: Colors.blueAccent,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 25),
+                                      controller: joinfname,
                                     ),
                                   ),
                                 ),
@@ -258,15 +399,15 @@ class editroomState extends State<editroom> {
                                       },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        labelText: 'Security Deposit',
+                                        labelText: 'Last Name',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.user,
+                                            color: Colors.blueGrey),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      controller: security_deposit,
+                                          color: Colors.white, fontSize: 25),
+                                      controller: joinlname,
                                     ),
                                   ),
                                 ),
@@ -291,15 +432,15 @@ class editroomState extends State<editroom> {
                                       },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        labelText: 'Minimum Water Bill',
+                                        labelText: 'Contact Number',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.phoneAlt,
+                                            color: Colors.blueGrey),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      controller: minwaterbill,
+                                          color: Colors.white, fontSize: 25),
+                                      controller: joinCnum,
                                     ),
                                   ),
                                 ),
@@ -324,81 +465,15 @@ class editroomState extends State<editroom> {
                                       },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        labelText: 'Minimum Electric Bill',
+                                        labelText: 'Email Add',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.mailBulk,
+                                            color: Colors.blueGrey),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 25),
-                                      controller: minelectricbill,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          new Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50.0, right: 50.0, top: 10.0),
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    height: 70.0,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Enter Number';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Initial Electric Reading',
-                                        labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
-                                      ),
-                                      cursorColor: Colors.blueAccent,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      controller: initial_electric_reading,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          new Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50.0, right: 50.0, top: 10.0),
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    height: 70.0,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Enter Number';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Initial Water Reading',
-                                        labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
-                                      ),
-                                      cursorColor: Colors.blueAccent,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      controller: initial_water_reading,
+                                      controller: emailadd,
                                     ),
                                   ),
                                 ),
@@ -419,7 +494,7 @@ class editroomState extends State<editroom> {
                                         onPressed: () {
                                           if (_formKey.currentState
                                               .validate()) {
-                                            edit();
+                                            updtenent();
                                             setState(
                                               () => loading = true,
                                             );
@@ -452,11 +527,10 @@ class editroomState extends State<editroom> {
           );
   }
 
-  void edit() async {
+  void updtenent() async {
     var url = Uri.parse("https://payrent000.000webhostapp.com/updateroom.php");
     var result = await http.post(url, body: {
-      "room_no": '${widget.list[widget.index]['room_no']}',
-      "room_fee": room_fee.text,
+      /* "room_fee": room_fee.text,
       "deposit": deposit.text,
       "advance": advance.text,
       "security_deposit": security_deposit.text,
@@ -464,6 +538,7 @@ class editroomState extends State<editroom> {
       "minelectricbill": minelectricbill.text,
       "initial_water_reading": initial_water_reading.text,
       "initial_electric_reading": initial_electric_reading.text,
+    */
     });
     var myInt = int.parse(result.body);
     print(myInt);
