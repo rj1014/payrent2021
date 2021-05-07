@@ -455,7 +455,7 @@ class editroomState extends State<editroom> {
   void edit() async {
     var url = Uri.parse("https://payrent000.000webhostapp.com/updateroom.php");
     var result = await http.post(url, body: {
-      "room_no": '${widget.list[widget.index]['room_no']}',
+      "roomid": '${widget.list[widget.index]['roomid']}',
       "room_fee": room_fee.text,
       "deposit": deposit.text,
       "advance": advance.text,
@@ -465,6 +465,7 @@ class editroomState extends State<editroom> {
       "initial_water_reading": initial_water_reading.text,
       "initial_electric_reading": initial_electric_reading.text,
     });
+    print("asda" + result.body);
     var myInt = int.parse(result.body);
     print(myInt);
     if (myInt == 2) {
@@ -473,7 +474,7 @@ class editroomState extends State<editroom> {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Succesfully Submited"),
+            title: new Text("Succesfully Updated"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(

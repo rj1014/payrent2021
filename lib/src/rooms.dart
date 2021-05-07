@@ -204,25 +204,29 @@ class ItemList extends StatelessWidget {
                                 }),
                           ],
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            new RaisedButton.icon(
-                                icon: FaIcon(FontAwesomeIcons.userAlt),
-                                label: new Text("Add Tenant"),
-                                color: Colors.green[300],
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                      new MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              new ladlordadd(
-                                                list: list,
-                                                index: i,
-                                              )));
-                                }),
-                          ],
-                        ),
+                        list[i]['userid'] == null
+                            ? Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  new RaisedButton.icon(
+                                      icon: FaIcon(FontAwesomeIcons.userAlt),
+                                      label: new Text("Add Tenant"),
+                                      color: Colors.green[300],
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        new ladlordadd(
+                                                          list: list,
+                                                          index: i,
+                                                        )));
+                                      }),
+                                ],
+                              )
+                            : Container(),
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

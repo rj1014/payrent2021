@@ -456,7 +456,7 @@ class adroomState extends State<adroom> {
   }
 
   void add() async {
-    var url = Uri.parse("https://payrent000.000webhostapp.com/addroom.php");
+    var url = Uri.parse("https://payrent000.000webhostapp.com/adroom.php");
     var result = await http.post(url, body: {
       "roomno": roomno.text,
       "monthlyfee": monthlyfee.text,
@@ -468,6 +468,19 @@ class adroomState extends State<adroom> {
       "waterread": waterread.text,
       "electricread": electricread.text,
     });
+
+    //   var url = Uri.parse("https://payrent000.000webhostapp.com/addroom.php");
+    //   var result = await http.post(url, body: {
+    //     "roomno": roomno.text,
+    //     "monthlyfee": monthlyfee.text,
+    //     "deposit": monthlyfee.text,
+    //     "advance": monthlyfee.text,
+    //     "security": security.text,
+    //     "minwaterb": minwaterb.text,
+    //     "minelectricb": minelectricb.text,
+    //     "waterread": waterread.text,
+    //     "electricread": electricread.text,
+    //   });
     var myInt = int.parse(result.body);
     print(myInt);
     if (myInt == 1) {

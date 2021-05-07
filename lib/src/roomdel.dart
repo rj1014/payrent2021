@@ -6,6 +6,7 @@ import 'package:payrent/loading/loadingPage.dart';
 import 'package:payrent/src/landloardviewaccount.dart';
 
 import '../model.dart';
+import 'landloardhome.dart';
 
 class Roomdelete extends StatefulWidget {
   List list;
@@ -23,7 +24,7 @@ class RoomdeleteState extends State<Roomdelete> {
   void deleteData() async {
     var url = Uri.parse("https://payrent000.000webhostapp.com/deleteroom.php");
     var result = await http.post(url, body: {
-      "userid": '${widget.list[widget.index]['userid']}',
+      "roomid": '${widget.list[widget.index]['roomid']}',
     });
     var re = int.parse(result.body);
     if (re == 1) {
@@ -42,9 +43,13 @@ class RoomdeleteState extends State<Roomdelete> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ladlordviewacc(
-                              // value: value,
-                              )));
+                          builder: (context) => landlordhomepages()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => ladlordviewacc(
+                  //             // value: value,
+                  //             )));
                 },
               ),
             ],

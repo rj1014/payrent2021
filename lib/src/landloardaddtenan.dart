@@ -406,9 +406,9 @@ class _ladlordaddState extends State<ladlordadd> {
   }
 
   void add() async {
-    var url = Uri.parse("https://payrent000.000webhostapp.com/addroom.php");
+    var url = Uri.parse("https://payrent000.000webhostapp.com/addtenant.php");
     var result = await http.post(url, body: {
-      "room_no": '${widget.list[widget.index]['room_no']}',
+      "roomid": '${widget.list[widget.index]['roomid']}',
       "fname": firstname.text,
       "lname": lastname.text,
       "contactnum": contactnum.text,
