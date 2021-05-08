@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:payrent/src/roomdel.dart';
+import 'package:payrent/src/viewtenant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'landloardhome.dart';
@@ -183,7 +184,7 @@ class ItemList extends StatelessWidget {
                   )),
                   Container(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -226,7 +227,28 @@ class ItemList extends StatelessWidget {
                                       }),
                                 ],
                               )
-                            : Container(),
+                            // : Container(),
+                            : Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  new RaisedButton.icon(
+                                      icon: FaIcon(FontAwesomeIcons.userAlt),
+                                      label: new Text("View Tenant"),
+                                      color: Colors.green[300],
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        new ViewTenant(
+                                                          list: list,
+                                                          index: i,
+                                                        )));
+                                      }),
+                                ],
+                              ),
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -160,10 +160,9 @@ class ItemList extends StatelessWidget {
               color: Colors.green[50],
               child: Column(
                 children: [
-                  Center(
-                      child: Container(
+                  Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Column(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -171,10 +170,10 @@ class ItemList extends StatelessWidget {
                         Text("Pad Number : ${list[i]['room_no']}"),
                       ],
                     ),
-                  )),
+                  ),
                   Container(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -245,7 +244,7 @@ class ItemList extends StatelessWidget {
                       children: [
                         new RaisedButton.icon(
                             icon: FaIcon(FontAwesomeIcons.clock),
-                            label: new Text("Current Bill"),
+                            label: new Text("Create Month Billing"),
                             color: Colors.red[100],
                             onPressed: () {
                               Navigator.of(context).push(new MaterialPageRoute(

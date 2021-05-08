@@ -33,6 +33,8 @@ class edittenantState extends State<edittenant> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController fname = TextEditingController();
   TextEditingController lname = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
   TextEditingController contactnum = TextEditingController();
   TextEditingController joinfname = TextEditingController();
   TextEditingController joinlname = TextEditingController();
@@ -48,6 +50,10 @@ class edittenantState extends State<edittenant> {
     lname = new TextEditingController(text: widget.list[widget.index]['lname']);
     contactnum = new TextEditingController(
         text: widget.list[widget.index]['contact_number']);
+    username =
+        new TextEditingController(text: widget.list[widget.index]['username']);
+    password =
+        new TextEditingController(text: widget.list[widget.index]['password']);
     /*joinfname = new TextEditingController(
         text: widget.list[widget.index]['joinfname']);
     joinlname = new TextEditingController(
@@ -224,21 +230,21 @@ class edittenantState extends State<edittenant> {
                                     child: TextFormField(
                                       validator: (value) {
                                         if (value.isEmpty) {
-                                          return 'Required';
+                                          return 'Enter your UserName';
                                         }
                                         return null;
                                       },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        labelText: 'Street',
+                                        labelText: 'UserName',
                                         labelStyle: textStyle,
-                                        icon: FaIcon(FontAwesomeIcons.home,
-                                            color: Colors.blueGrey),
+                                        icon: Icon(Icons.supervised_user_circle,
+                                            color: Colors.blue),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 25),
-                                      controller: street,
+                                      controller: username,
                                     ),
                                   ),
                                 ),
@@ -257,176 +263,7 @@ class edittenantState extends State<edittenant> {
                                     child: TextFormField(
                                       validator: (value) {
                                         if (value.isEmpty) {
-                                          return 'Required';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Barangay',
-                                        labelStyle: textStyle,
-                                        icon: FaIcon(FontAwesomeIcons.city,
-                                            color: Colors.blueGrey),
-                                      ),
-                                      cursorColor: Colors.blueAccent,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      controller: barangay,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          new Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50.0, right: 50.0, top: 10.0),
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    height: 70.0,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Required';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'City',
-                                        labelStyle: textStyle,
-                                        icon: FaIcon(FontAwesomeIcons.city,
-                                            color: Colors.blueGrey),
-                                      ),
-                                      cursorColor: Colors.blueAccent,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      controller: city,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          new Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50.0, right: 50.0, top: 10.0),
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    height: 70.0,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Enter Number';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Email Add',
-                                        labelStyle: textStyle,
-                                        icon: FaIcon(FontAwesomeIcons.mailBulk,
-                                            color: Colors.blueGrey),
-                                      ),
-                                      cursorColor: Colors.blueAccent,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      controller: emailadd,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Text(
-                            "   Joiner's Name",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          new Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50.0, right: 50.0, top: 10.0),
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    height: 70.0,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Enter Number';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'First Name',
-                                        labelStyle: textStyle,
-                                        icon: FaIcon(FontAwesomeIcons.user,
-                                            color: Colors.blueGrey),
-                                      ),
-                                      cursorColor: Colors.blueAccent,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 25),
-                                      controller: joinfname,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          new Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50.0, right: 50.0, top: 10.0),
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    height: 70.0,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Enter Number';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Last Name',
-                                        labelStyle: textStyle,
-                                        icon: FaIcon(FontAwesomeIcons.user,
-                                            color: Colors.blueGrey),
-                                      ),
-                                      cursorColor: Colors.blueAccent,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 25),
-                                      controller: joinlname,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          new Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50.0, right: 50.0, top: 10.0),
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    height: 70.0,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Enter Number';
+                                          return 'Enter your Contact Number';
                                         }
                                         return null;
                                       },
@@ -434,13 +271,13 @@ class edittenantState extends State<edittenant> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Contact Number',
                                         labelStyle: textStyle,
-                                        icon: FaIcon(FontAwesomeIcons.phoneAlt,
-                                            color: Colors.blueGrey),
+                                        icon: Icon(Icons.phone,
+                                            color: Colors.pink),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 25),
-                                      controller: joinCnum,
+                                          color: Colors.black, fontSize: 25),
+                                      controller: contactnum,
                                     ),
                                   ),
                                 ),
@@ -458,28 +295,302 @@ class edittenantState extends State<edittenant> {
                                     height: 70.0,
                                     child: TextFormField(
                                       validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Enter Number';
+                                        if (value.length < 8) {
+                                          if (value.isEmpty) {
+                                            return 'Password is empty';
+                                          } else {
+                                            return 'Atleast 8 character';
+                                          }
                                         }
+
                                         return null;
                                       },
+                                      obscureText: true,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        labelText: 'Email Add',
+                                        labelText: 'Password',
                                         labelStyle: textStyle,
-                                        icon: FaIcon(FontAwesomeIcons.mailBulk,
-                                            color: Colors.blueGrey),
+                                        icon: Icon(Icons.vpn_key,
+                                            color: Colors.red),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 25),
-                                      controller: emailadd,
+                                      controller: password,
                                     ),
                                   ),
                                 ),
                               )
                             ],
                           ),
+                          // new Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.only(
+                          //             left: 50.0, right: 50.0, top: 10.0),
+                          //         child: new Container(
+                          //           alignment: Alignment.center,
+                          //           height: 70.0,
+                          //           child: TextFormField(
+                          //             validator: (value) {
+                          //               if (value.isEmpty) {
+                          //                 return 'Required';
+                          //               }
+                          //               return null;
+                          //             },
+                          //             decoration: InputDecoration(
+                          //               border: OutlineInputBorder(),
+                          //               labelText: 'Street',
+                          //               labelStyle: textStyle,
+                          //               icon: FaIcon(FontAwesomeIcons.home,
+                          //                   color: Colors.blueGrey),
+                          //             ),
+                          //             cursorColor: Colors.blueAccent,
+                          //             style: TextStyle(
+                          //                 color: Colors.black, fontSize: 25),
+                          //             controller: street,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          // new Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.only(
+                          //             left: 50.0, right: 50.0, top: 10.0),
+                          //         child: new Container(
+                          //           alignment: Alignment.center,
+                          //           height: 70.0,
+                          //           child: TextFormField(
+                          //             validator: (value) {
+                          //               if (value.isEmpty) {
+                          //                 return 'Required';
+                          //               }
+                          //               return null;
+                          //             },
+                          //             decoration: InputDecoration(
+                          //               border: OutlineInputBorder(),
+                          //               labelText: 'Barangay',
+                          //               labelStyle: textStyle,
+                          //               icon: FaIcon(FontAwesomeIcons.city,
+                          //                   color: Colors.blueGrey),
+                          //             ),
+                          //             cursorColor: Colors.blueAccent,
+                          //             style: TextStyle(
+                          //                 color: Colors.black, fontSize: 25),
+                          //             controller: barangay,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          // new Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.only(
+                          //             left: 50.0, right: 50.0, top: 10.0),
+                          //         child: new Container(
+                          //           alignment: Alignment.center,
+                          //           height: 70.0,
+                          //           child: TextFormField(
+                          //             validator: (value) {
+                          //               if (value.isEmpty) {
+                          //                 return 'Required';
+                          //               }
+                          //               return null;
+                          //             },
+                          //             decoration: InputDecoration(
+                          //               border: OutlineInputBorder(),
+                          //               labelText: 'City',
+                          //               labelStyle: textStyle,
+                          //               icon: FaIcon(FontAwesomeIcons.city,
+                          //                   color: Colors.blueGrey),
+                          //             ),
+                          //             cursorColor: Colors.blueAccent,
+                          //             style: TextStyle(
+                          //                 color: Colors.black, fontSize: 25),
+                          //             controller: city,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          // new Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.only(
+                          //             left: 50.0, right: 50.0, top: 10.0),
+                          //         child: new Container(
+                          //           alignment: Alignment.center,
+                          //           height: 70.0,
+                          //           child: TextFormField(
+                          //             validator: (value) {
+                          //               if (value.isEmpty) {
+                          //                 return 'Enter Number';
+                          //               }
+                          //               return null;
+                          //             },
+                          //             decoration: InputDecoration(
+                          //               border: OutlineInputBorder(),
+                          //               labelText: 'Email Add',
+                          //               labelStyle: textStyle,
+                          //               icon: FaIcon(FontAwesomeIcons.mailBulk,
+                          //                   color: Colors.blueGrey),
+                          //             ),
+                          //             cursorColor: Colors.blueAccent,
+                          //             style: TextStyle(
+                          //                 color: Colors.black, fontSize: 25),
+                          //             controller: emailadd,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          // Text(
+                          //   "   Joiner's Name",
+                          //   style: TextStyle(fontSize: 20, color: Colors.white),
+                          // ),
+                          // new Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.only(
+                          //             left: 50.0, right: 50.0, top: 10.0),
+                          //         child: new Container(
+                          //           alignment: Alignment.center,
+                          //           height: 70.0,
+                          //           child: TextFormField(
+                          //             validator: (value) {
+                          //               if (value.isEmpty) {
+                          //                 return 'Enter Number';
+                          //               }
+                          //               return null;
+                          //             },
+                          //             decoration: InputDecoration(
+                          //               border: OutlineInputBorder(),
+                          //               labelText: 'First Name',
+                          //               labelStyle: textStyle,
+                          //               icon: FaIcon(FontAwesomeIcons.user,
+                          //                   color: Colors.blueGrey),
+                          //             ),
+                          //             cursorColor: Colors.blueAccent,
+                          //             style: TextStyle(
+                          //                 color: Colors.white, fontSize: 25),
+                          //             controller: joinfname,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          // new Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.only(
+                          //             left: 50.0, right: 50.0, top: 10.0),
+                          //         child: new Container(
+                          //           alignment: Alignment.center,
+                          //           height: 70.0,
+                          //           child: TextFormField(
+                          //             validator: (value) {
+                          //               if (value.isEmpty) {
+                          //                 return 'Enter Number';
+                          //               }
+                          //               return null;
+                          //             },
+                          //             decoration: InputDecoration(
+                          //               border: OutlineInputBorder(),
+                          //               labelText: 'Last Name',
+                          //               labelStyle: textStyle,
+                          //               icon: FaIcon(FontAwesomeIcons.user,
+                          //                   color: Colors.blueGrey),
+                          //             ),
+                          //             cursorColor: Colors.blueAccent,
+                          //             style: TextStyle(
+                          //                 color: Colors.white, fontSize: 25),
+                          //             controller: joinlname,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          // new Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.only(
+                          //             left: 50.0, right: 50.0, top: 10.0),
+                          //         child: new Container(
+                          //           alignment: Alignment.center,
+                          //           height: 70.0,
+                          //           child: TextFormField(
+                          //             validator: (value) {
+                          //               if (value.isEmpty) {
+                          //                 return 'Enter Number';
+                          //               }
+                          //               return null;
+                          //             },
+                          //             decoration: InputDecoration(
+                          //               border: OutlineInputBorder(),
+                          //               labelText: 'Contact Number',
+                          //               labelStyle: textStyle,
+                          //               icon: FaIcon(FontAwesomeIcons.phoneAlt,
+                          //                   color: Colors.blueGrey),
+                          //             ),
+                          //             cursorColor: Colors.blueAccent,
+                          //             style: TextStyle(
+                          //                 color: Colors.white, fontSize: 25),
+                          //             controller: joinCnum,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          // new Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.only(
+                          //             left: 50.0, right: 50.0, top: 10.0),
+                          //         child: new Container(
+                          //           alignment: Alignment.center,
+                          //           height: 70.0,
+                          //           child: TextFormField(
+                          //             validator: (value) {
+                          //               if (value.isEmpty) {
+                          //                 return 'Enter Number';
+                          //               }
+                          //               return null;
+                          //             },
+                          //             decoration: InputDecoration(
+                          //               border: OutlineInputBorder(),
+                          //               labelText: 'Email Add',
+                          //               labelStyle: textStyle,
+                          //               icon: FaIcon(FontAwesomeIcons.mailBulk,
+                          //                   color: Colors.blueGrey),
+                          //             ),
+                          //             cursorColor: Colors.blueAccent,
+                          //             style: TextStyle(
+                          //                 color: Colors.black, fontSize: 25),
+                          //             controller: emailadd,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
                           new Row(
                             children: <Widget>[
                               Expanded(
@@ -528,8 +639,15 @@ class edittenantState extends State<edittenant> {
   }
 
   void updtenent() async {
-    var url = Uri.parse("https://payrent000.000webhostapp.com/updateroom.php");
+    var url = Uri.parse(
+        "https://payrent000.000webhostapp.com/update-tenant-details.php");
     var result = await http.post(url, body: {
+      'userid': widget.list[widget.index]['userid'].toString(),
+      'fname': fname.text,
+      'lname': lname.text,
+      'contactno': contactnum.text,
+      'username': username.text,
+      'password': password.text,
       /* "room_fee": room_fee.text,
       "deposit": deposit.text,
       "advance": advance.text,
@@ -548,7 +666,7 @@ class edittenantState extends State<edittenant> {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Succesfully Submited"),
+            title: new Text("Succesfully Updated"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(

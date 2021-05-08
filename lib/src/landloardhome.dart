@@ -252,7 +252,7 @@ class landlordhomepagesState extends State<landlordhomepages> {
                             )),
                       ),
                       Text(
-                        'View Accounts',
+                        'View Tenants',
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

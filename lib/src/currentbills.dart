@@ -20,12 +20,32 @@ class _CurrentbillState extends State<Currentbill> {
   DateTime _date = new DateTime.now();
   DateTime _datetext = DateTime.now();
   final _formKey = GlobalKey<FormState>();
-  TextEditingController waterbill = TextEditingController();
-  TextEditingController electricbill = TextEditingController();
+  TextEditingController waterreading = TextEditingController();
+  TextEditingController electricreading = TextEditingController();
+  TextEditingController duedate = TextEditingController();
 
   @override
   initState() {
     super.initState();
+  }
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: new DateTime(2019, 1, 1),
+      lastDate: new DateTime(2022, 1, 1),
+    );
+
+    if (picked != null && picked != _date) {
+      print("Date selected: ${_date.year}/${_date.month}/${_date.day}");
+      setState(() {
+        _date = picked;
+        String b = ("${_date.year}/${_date.month}/${_date.day}");
+        duedate.text = b.toString();
+        print(duedate.text);
+      });
+    }
   }
 
   @override
@@ -39,7 +59,7 @@ class _CurrentbillState extends State<Currentbill> {
             appBar: AppBar(
               backgroundColor: Colors.green[200],
               title: Text(
-                  '${widget.list[widget.index]['fname']} ${widget.list[widget.index]['lname']} Current Billing'),
+                  '${widget.list[widget.index]['fname']} ${widget.list[widget.index]['lname']}'),
               centerTitle: true,
             ),
             backgroundColor: Colors.green[200],
@@ -68,28 +88,27 @@ class _CurrentbillState extends State<Currentbill> {
                                         left: 50.0, right: 50.0, top: 10.0),
                                     child: new Container(
                                       alignment: Alignment.center,
-                                      height: 70.0,
+                                      height: 40.0,
                                       child: TextFormField(
-                                        keyboardType: TextInputType.number,
+                                        onTap: () {
+                                          _selectDate(context);
+                                        },
                                         validator: (value) {
-                                          var pNumber = int.tryParse(value);
                                           if (value.isEmpty) {
-                                            return 'Amount Required.!';
-                                          }
-                                          if (pNumber == null) {
-                                            return 'Enter Proper Amount.!';
+                                            duedate.text = _datetext.toString();
                                           }
                                           return null;
                                         },
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
-                                          labelText: 'Water Bill',
+                                          labelText: "Date Occupamncy",
                                           labelStyle: textStyle,
                                           icon: FaIcon(
-                                              FontAwesomeIcons.handHoldingWater,
-                                              color: Colors.blueAccent),
+                                            FontAwesomeIcons.calendarAlt,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                        controller: waterbill,
+                                        controller: duedate,
                                       ),
                                     ),
                                   ),
@@ -119,12 +138,48 @@ class _CurrentbillState extends State<Currentbill> {
                                         },
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
-                                          labelText: 'Electric Bill',
+                                          labelText: 'Current Water Reading',
+                                          labelStyle: textStyle,
+                                          icon: FaIcon(
+                                              FontAwesomeIcons.handHoldingWater,
+                                              color: Colors.blueAccent),
+                                        ),
+                                        controller: waterreading,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            new Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 50.0, right: 50.0, top: 10.0),
+                                    child: new Container(
+                                      alignment: Alignment.center,
+                                      height: 70.0,
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        validator: (value) {
+                                          var pNumber = int.tryParse(value);
+                                          if (value.isEmpty) {
+                                            return 'Amount Required.!';
+                                          }
+                                          if (pNumber == null) {
+                                            return 'Enter Proper Amount.!';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'Current Electric Reading',
                                           labelStyle: textStyle,
                                           icon: FaIcon(FontAwesomeIcons.bolt,
                                               color: Colors.yellowAccent),
                                         ),
-                                        controller: electricbill,
+                                        controller: electricreading,
                                       ),
                                     ),
                                   ),
@@ -177,17 +232,18 @@ class _CurrentbillState extends State<Currentbill> {
   }
 
   void submitbilling() async {
-    int waterb = int.parse(waterbill.text); //- initialbil)*valuepercubic;
-    ;
-    int electricb = int.parse(electricbill.text); //- initialbill * valueperkwh;
+    // int waterb = int.parse(waterbill.text); //- initialbil)*valuepercubic;
+    // int electricb = int.parse(electricbill.text); //- initialbill * valueperkwh;
 
-    int total = waterb + electricb; //+monthlyfee;
+    // int total = waterb + electricb; //+monthlyfee;
     var url = Uri.parse("https://payrent000.000webhostapp.com/submitbill.php");
     var result = await http.post(url, body: {
-      "waterbill": waterb,
-      "electricbill": electricb,
+      "userid": widget.list[widget.index]['userid'].toString(),
+      "currentwaterreading": waterreading.text,
+      "currentelectricreading": electricreading.text,
+      "duedate": duedate.text,
     });
-    print(total);
+    print(result.body);
     var myInt = int.parse(result.body);
     print(myInt);
     if (myInt == 2) {
@@ -197,7 +253,7 @@ class _CurrentbillState extends State<Currentbill> {
           // return object of type Dialog
           return AlertDialog(
             title: new Text("Succesfully Submitted"),
-            content: new Text("Total Billing: " '$total'),
+            // content: new Text("Total Billing: " '$total'),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(

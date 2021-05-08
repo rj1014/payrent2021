@@ -32,7 +32,7 @@ class _DeleteState extends State<Delete> {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("DELETED SUCCESSFULL"),
+            title: new Text("DELETED SUCCESSFULLY"),
             content: new Text(""),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog

@@ -409,6 +409,7 @@ class _ladlordaddState extends State<ladlordadd> {
     var url = Uri.parse("https://payrent000.000webhostapp.com/addtenant.php");
     var result = await http.post(url, body: {
       "roomid": '${widget.list[widget.index]['roomid']}',
+      "roomno": '${widget.list[widget.index]['room_no']}',
       "fname": firstname.text,
       "lname": lastname.text,
       "contactnum": contactnum.text,
