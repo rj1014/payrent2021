@@ -101,19 +101,24 @@ class landlordhomepagesState extends State<landlordhomepages> {
     });
 
     for (var i = 0; i < data.length; i++) {
+      String name = "${data[i]['fanme']} ${data[i]['lname']}";
       String username = data[i]['username'];
+      String rentfee = data[i]['rentfee'];
+      String waterbill = data[i]['waterbill'];
+      String electricbill = data[i]['electricbill'];
       String totalamount = data[i]['totalamount'];
       String contact = data[i]['contact_number'];
       String duedate = data[i]['duedate'];
-      print('${username}');
+      String room = data[i]['room_no'];
       const String groupKey = 'com.android.example.WORK_EMAIL';
       const String groupChannelId = 'grouped channel id';
       const String groupChannelName = 'grouped channel name';
       const String groupChannelDescription = 'grouped channel description';
       telephony.sendSms(
-          to: "${contact}",
+          to: "$contact",
           message:
-              "Hello ${username}, Reminding for you billing duedate: ${duedate} Tolal of : ${totalamount}");
+              // "Hello $username, Reminding for you billing duedate: $duedate Tolal of : $totalamount");
+              "Hello $name, Reminding for your billing Due Date: $duedate \n Rent Fee: $rentfee \n Electric Bill: $electricbill \n Water Bill: $waterbill \n Total: $totalamount");
 
       const AndroidNotificationDetails firstNotificationAndroidSpecifics =
           AndroidNotificationDetails(
@@ -125,8 +130,9 @@ class landlordhomepagesState extends State<landlordhomepages> {
           NotificationDetails(android: firstNotificationAndroidSpecifics);
       await flutterLocalNotificationsPlugin.show(
           1,
-          'Succesfuly Send sms to: ${username}',
-          'Duedate: ${duedate} Billing: ${totalamount}',
+          // 'Succesfuly Send sms to: $username',
+          'Notification sent to: $name',
+          'Pad No: $room \n Duedate: $duedate \n Total Payment: $totalamount',
           firstNotificationPlatformSpecifics);
       await Future.delayed(const Duration(seconds: 10));
     }

@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
-import 'package:payrent/src/addbill.dart';
-import 'package:payrent/src/delete.dart';
-import 'package:payrent/src/tenant_history.dart';
+// import 'package:payrent/src/addbill.dart';
+// import 'package:payrent/src/delete.dart';
+// import 'package:payrent/src/tenant_history.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class landlordnotif extends StatefulWidget {
   landlordnotifState createState() => landlordnotifState();
@@ -23,7 +22,8 @@ class landlordnotifState extends State<landlordnotif> {
   String userid;
 
   Future<List> getData() async {
-    var urls = Uri.parse("https://payrent000.000webhostapp.com/getallsetonlandlord.php");
+    var urls = Uri.parse(
+        "https://payrent000.000webhostapp.com/getallsetonlandlord.php");
     final response = await http.post(urls, body: {});
     return data = json.decode(response.body);
   }
@@ -41,7 +41,6 @@ class landlordnotifState extends State<landlordnotif> {
           title: Text("Notification"),
           centerTitle: true,
         ),
-        
         backgroundColor: Colors.grey[600],
         body: Container(
           decoration: BoxDecoration(
@@ -88,19 +87,18 @@ class ItemList extends StatelessWidget {
         String numb = '${list[i]['contact_number']}';
 
         Future<String> usr() async {
-            Container(
-                              child: Center(
-                              child: SpinKitWave(
-                                color: Colors.green[600],
-                              ),
-                            ));
-                                
-                                
-          var we = Uri.parse("https://payrent000.000webhostapp.com/setofflandlord.php");
+          Container(
+              child: Center(
+            child: SpinKitWave(
+              color: Colors.green[600],
+            ),
+          ));
+
+          var we = Uri.parse(
+              "https://payrent000.000webhostapp.com/setofflandlord.php");
           final respnse =
               await http.post(we, body: {"username": '${list[i]['username']}'});
           var myInt = int.parse(respnse.body);
-         
 
           if (myInt == 2) {
             String smstenant = 'sms:$numb?body=text%20message';
@@ -126,10 +124,9 @@ class ItemList extends StatelessWidget {
                     ),
                   )),
                   Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,22 +135,14 @@ class ItemList extends StatelessWidget {
                                 icon: FaIcon(FontAwesomeIcons.sms),
                                 label: new Text("READ"),
                                 color: Colors.green[200],
-                                onPressed:
-                                
-                                
-                                 usr),
+                                onPressed: usr),
                           ],
-                        ), 
+                        ),
                       ]))
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
-              )
-              
-              ),
-
-              
+              )),
         );
-        
       },
     );
   }

@@ -1,10 +1,10 @@
-import 'dart:convert';
-import 'package:badges/badges.dart';
+// import 'dart:convert';
+// import 'package:badges/badges.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:payrent/loading/loadingPage.dart';
-import 'package:payrent/model.dart';
+// import 'package:payrent/model.dart';
 import 'package:payrent/src/Login_Page.dart';
 
 class Chabngepass extends StatefulWidget {
