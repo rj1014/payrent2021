@@ -43,6 +43,7 @@ class _ladlordaddState extends State<ladlordadd> {
   TextEditingController contactnum = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController date_occupancy = TextEditingController();
+  TextEditingController _duedate = TextEditingController();
   @override
   void initState() {
     room_no =
@@ -64,7 +65,9 @@ class _ladlordaddState extends State<ladlordadd> {
       setState(() {
         _date = picked;
         String b = ("${_date.year}/${_date.month}/${_date.day}");
+        String d = ("${_date.year}/${_date.month + 1}/${_date.day}");
         date_occupancy.text = b.toString();
+        _duedate.text = d.toString();
         print(date_occupancy.text);
       });
     }
@@ -416,6 +419,7 @@ class _ladlordaddState extends State<ladlordadd> {
       "password": password.text,
       "username": username.text,
       "date_occupancy": date_occupancy.text,
+      "_duedate": _duedate.text
     });
     var myInt = int.parse(result.body);
     print(myInt);
@@ -449,7 +453,7 @@ class _ladlordaddState extends State<ladlordadd> {
           // return object of type Dialog
           return AlertDialog(
             // title: new Text("Username Exist!"),
-            content: new Text("Succesfully Created"),
+            content: new Text("Tenant Succesfully Created"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(

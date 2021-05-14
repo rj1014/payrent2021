@@ -666,7 +666,7 @@ class edittenantState extends State<edittenant> {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Succesfully Updated"),
+            title: new Text("Tenant Succesfully Updated"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(

@@ -101,7 +101,7 @@ class _CurrentbillState extends State<Currentbill> {
                                         },
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
-                                          labelText: "Date Occupamncy",
+                                          labelText: "Due Date",
                                           labelStyle: textStyle,
                                           icon: FaIcon(
                                             FontAwesomeIcons.calendarAlt,
@@ -232,10 +232,6 @@ class _CurrentbillState extends State<Currentbill> {
   }
 
   void submitbilling() async {
-    // int waterb = int.parse(waterbill.text); //- initialbil)*valuepercubic;
-    // int electricb = int.parse(electricbill.text); //- initialbill * valueperkwh;
-
-    // int total = waterb + electricb; //+monthlyfee;
     var url = Uri.parse("https://payrent000.000webhostapp.com/submitbill.php");
     var result = await http.post(url, body: {
       "userid": widget.list[widget.index]['userid'].toString(),
@@ -252,7 +248,7 @@ class _CurrentbillState extends State<Currentbill> {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Succesfully Submitted"),
+            title: new Text("Bill Succesfully Submitted"),
             // content: new Text("Total Billing: " '$total'),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog

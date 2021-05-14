@@ -131,8 +131,8 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Pad Number',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.houseUser,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -164,8 +164,8 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Monthly Fee',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.moneyBill,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -197,8 +197,8 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: '1 Month Deposit',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.moneyBill,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -230,8 +230,8 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: '1 Month Advance',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.moneyBill,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -263,8 +263,8 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Security Deposit',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.moneyBill,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -296,8 +296,9 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Minimum Water Bill',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(
+                                            FontAwesomeIcons.handHoldingWater,
+                                            color: Colors.blue),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -329,8 +330,8 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Minimum Electric Bill',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.bolt,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -362,8 +363,8 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Initial Electric Reading',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.bolt,
+                                            color: Colors.amber[600]),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -395,8 +396,9 @@ class adroomState extends State<adroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Initial Water Reading',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(
+                                            FontAwesomeIcons.handHoldingWater,
+                                            color: Colors.blue),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -468,19 +470,6 @@ class adroomState extends State<adroom> {
       "waterread": waterread.text,
       "electricread": electricread.text,
     });
-
-    //   var url = Uri.parse("https://payrent000.000webhostapp.com/addroom.php");
-    //   var result = await http.post(url, body: {
-    //     "roomno": roomno.text,
-    //     "monthlyfee": monthlyfee.text,
-    //     "deposit": monthlyfee.text,
-    //     "advance": monthlyfee.text,
-    //     "security": security.text,
-    //     "minwaterb": minwaterb.text,
-    //     "minelectricb": minelectricb.text,
-    //     "waterread": waterread.text,
-    //     "electricread": electricread.text,
-    //   });
     var myInt = int.parse(result.body);
     print(myInt);
     if (myInt == 1) {
@@ -513,7 +502,7 @@ class adroomState extends State<adroom> {
           // return object of type Dialog
           return AlertDialog(
             // title: new Text("Username Exist!"),
-            content: new Text("Succesfully Created"),
+            content: new Text("Room Succesfully Created"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(
