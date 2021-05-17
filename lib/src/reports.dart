@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:payrent/src/selectdateforreports.dart';
 import 'landloardhome.dart';
 
 class report extends StatefulWidget {
@@ -92,108 +93,112 @@ class reportState extends State<report> {
                   MaterialButton(
                     color: Colors.green,
                     onPressed: () async {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) {
-                          return Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.90,
-                              color: Colors.white,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Total Paid Amount: P $valuePaid',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("Close"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                      // showDialog(
+                      //   barrierDismissible: false,
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return Center(
+                      //       child: Container(
+                      //         width: MediaQuery.of(context).size.width * 0.90,
+                      //         color: Colors.white,
+                      //         child: Column(
+                      //           mainAxisSize: MainAxisSize.min,
+                      //           children: [
+                      //             Text(
+                      //               'Total Paid Amount: P $valuePaid',
+                      //               style: TextStyle(
+                      //                 fontSize: 15,
+                      //               ),
+                      //             ),
+                      //             MaterialButton(
+                      //               onPressed: () {
+                      //                 Navigator.of(context).pop();
+                      //               },
+                      //               child: Text("Close"),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      // );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DateReports()));
                     },
-                    child: Text('Paid'),
+                    child: Text('Custom Report'),
                   ),
-                  MaterialButton(
-                    color: Colors.red,
-                    onPressed: () async {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) {
-                          return Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.90,
-                              color: Colors.white,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Total Unpaid Amount: P $valueUnpaid',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("Close"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    child: Text('Unpaid'),
-                  ),
-                  MaterialButton(
-                    color: Colors.blue,
-                    onPressed: () async {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) {
-                          return Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.90,
-                              color: Colors.white,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Total Revenue: $valueRevenue',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("Close"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    child: Text('Total Revenue'),
-                  ),
+                  // MaterialButton(
+                  //   color: Colors.red,
+                  //   onPressed: () async {
+                  //     showDialog(
+                  //       barrierDismissible: false,
+                  //       context: context,
+                  //       builder: (context) {
+                  //         return Center(
+                  //           child: Container(
+                  //             width: MediaQuery.of(context).size.width * 0.90,
+                  //             color: Colors.white,
+                  //             child: Column(
+                  //               mainAxisSize: MainAxisSize.min,
+                  //               children: [
+                  //                 Text(
+                  //                   'Total Unpaid Amount: P $valueUnpaid',
+                  //                   style: TextStyle(
+                  //                     fontSize: 15,
+                  //                   ),
+                  //                 ),
+                  //                 MaterialButton(
+                  //                   onPressed: () {
+                  //                     Navigator.of(context).pop();
+                  //                   },
+                  //                   child: Text("Close"),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  //   child: Text('Unpaid'),
+                  // ),
+                  // MaterialButton(
+                  //   color: Colors.blue,
+                  //   onPressed: () async {
+                  //     showDialog(
+                  //       barrierDismissible: false,
+                  //       context: context,
+                  //       builder: (context) {
+                  //         return Center(
+                  //           child: Container(
+                  //             width: MediaQuery.of(context).size.width * 0.90,
+                  //             color: Colors.white,
+                  //             child: Column(
+                  //               mainAxisSize: MainAxisSize.min,
+                  //               children: [
+                  //                 Text(
+                  //                   'Total Revenue: $valueRevenue',
+                  //                   style: TextStyle(
+                  //                     fontSize: 15,
+                  //                   ),
+                  //                 ),
+                  //                 MaterialButton(
+                  //                   onPressed: () {
+                  //                     Navigator.of(context).pop();
+                  //                   },
+                  //                   child: Text("Close"),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  //   child: Text('Total Revenue'),
+                  // ),
                 ],
               ),
             ),

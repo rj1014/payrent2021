@@ -11,29 +11,27 @@ import 'dart:convert';
 import '../model.dart';
 
 class uploadrec extends StatefulWidget {
-
-
-  uploadrecState createState() => uploadrecState(billid,value,valuepa,amount);
+  uploadrecState createState() =>
+      uploadrecState(billid, value, valuepa, amount);
   String s;
   String value;
 
   String valuepa;
   String billid;
   String amount;
-  uploadrec({this.billid,this.value,this.valuepa,this.amount});
+  uploadrec({this.billid, this.value, this.valuepa, this.amount});
 
   String userid;
 }
 
 class uploadrecState extends State<uploadrec> {
-  
   String userid;
   String valuepa;
   String value;
   String billid;
   String amount;
 
-  uploadrecState(this.billid, this.value,this.valuepa, this.amount);
+  uploadrecState(this.billid, this.value, this.valuepa, this.amount);
 
   void _showPicker(context) {
     showModalBottomSheet(
@@ -67,7 +65,6 @@ class uploadrecState extends State<uploadrec> {
 
   // Final picker = ImagePicker();
   String s;
-
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController productname = TextEditingController();
@@ -107,7 +104,7 @@ class uploadrecState extends State<uploadrec> {
       return;
     }
     String fileName = tmpFile.path.split('/').last;
-    
+
     if (upload(fileName) == null) {
       upload(fileName);
       // Future.delayed(Duration(milliseconds: 300), () {
@@ -119,27 +116,30 @@ class uploadrecState extends State<uploadrec> {
   }
 
   upload(String fileName) async {
-    
     var uploadEndPoint =
         Uri.parse("https://payrent000.000webhostapp.com/uploadre.php");
-    var xname = ( billid+".jpg");
+    var xname = (billid + ".jpg");
     var result = await http.post(uploadEndPoint, body: {
       "image": base64Image,
       "userid": userid,
       "username": value,
       "billid": billid,
       "amount": amount,
-      "path":xname,
-      
+      "path": xname,
     }).then((result) {
       setStatus(result.statusCode == 200 ? result.body : errMessage);
 
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => tenanthomepages(value: value,valuepa: valuepa,)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => tenanthomepages(
+                    value: value,
+                    valuepa: valuepa,
+                  )));
     }).catchError((error) {
       // setStatus(error);
     });
-    // print(result(re.body));
+    // print(result.body);
   }
 
   Widget showImage() {
@@ -218,98 +218,95 @@ class uploadrecState extends State<uploadrec> {
         ),
       ),
       backgroundColor: Colors.white,
-      body:SingleChildScrollView( 
-      child:Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("img/assets/bg2.jpeg"),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.grey.withOpacity(0.3), BlendMode.dstATop),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("img/assets/bg2.jpeg"),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                  Colors.grey.withOpacity(0.3), BlendMode.dstATop),
+            ),
+          ),
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height / 2.1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 0.0, right: 0.0, top: 20.0),
+                      child: Row(children: <Widget>[
+                        showImage(),
+                      ]),
+                    ),
+                  ),
+                  new Row(children: <Widget>[
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 0.0, right: 0.0, top: 20.0),
+                      child: Container(
+                        child: RaisedButton.icon(
+                          onPressed: () {
+                            _showPicker(context); // call choose image function
+                          },
+                          icon: Icon(Icons.folder_open),
+                          label: Text("CHOOSE IMAGE"),
+                          color: Colors.green[200],
+                          colorBrightness: Brightness.dark,
+                        ),
+                      ),
+                    ))
+                  ]),
+                  new Row(children: <Widget>[
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 0.0, right: 0.0, top: 20.0),
+                      child: Container(
+                          //show upload button after choosing image
+                          //if uploadimage is null then show empty container
+
+                          //elese show uplaod button
+                          child: RaisedButton.icon(
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            startUpload();
+                          }
+                        },
+                        //start uploading image
+
+                        icon: Icon(Icons.file_upload),
+                        label: Text("UPLOAD"),
+                        color: Colors.green[200],
+                        colorBrightness: Brightness.dark,
+                        //set brghtness to dark, because deepOrangeAccent is darker coler
+                        //so that its text color is light
+                      )),
+                    ))
+                  ]),
+                  new Row(children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        status,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    )
+                  ])
+                ],
+              ),
+            ),
           ),
         ),
-      child:Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                
-                
-                height: MediaQuery.of(context).size.height / 2.1,
-                child:Padding(
-                  padding:
-                      const EdgeInsets.only(left: 0.0, right: 0.0, top: 20.0),
-              child: Row(
-                children: <Widget>[
-                  
-                showImage(),
-              ]),),),
-              new Row(children: <Widget>[
-                Expanded(
-                    child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 0.0, right: 0.0, top: 20.0),
-                  child: Container(
-                    child: RaisedButton.icon(
-                      onPressed: () {
-                        _showPicker(context); // call choose image function
-                      },
-                      icon: Icon(Icons.folder_open),
-                      label: Text("CHOOSE IMAGE"),
-                      color: Colors.green[200],
-                      colorBrightness: Brightness.dark,
-                    ),
-                  ),
-                ))
-              ]),
-             
-              new Row(children: <Widget>[
-                Expanded(
-                    child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 0.0, right: 0.0, top: 20.0),
-                  child: Container(
-                      //show upload button after choosing image
-                      //if uploadimage is null then show empty container
-
-                      //elese show uplaod button
-                      child: RaisedButton.icon(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                                     startUpload();
-                                    
-                                    }
-                      
-                    },
-                    //start uploading image
-
-                    icon: Icon(Icons.file_upload),
-                    label: Text("UPLOAD"),
-                    color: Colors.green[200],
-                    colorBrightness: Brightness.dark,
-                    //set brghtness to dark, because deepOrangeAccent is darker coler
-                    //so that its text color is light
-                  )),
-                ))
-              ]),
-              new Row(children: <Widget>[
-                Expanded(
-                  child: Text(
-                    status,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                )
-              ])
-            ],
-          ),
-       ), ),),
       ),
     );
   }

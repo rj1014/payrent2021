@@ -101,7 +101,7 @@ class _CurrentbillState extends State<Currentbill> {
                                         },
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
-                                          labelText: "Date Occupamncy",
+                                          labelText: "Due Date",
                                           labelStyle: textStyle,
                                           icon: FaIcon(
                                             FontAwesomeIcons.calendarAlt,
