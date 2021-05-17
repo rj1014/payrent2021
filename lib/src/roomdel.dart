@@ -33,7 +33,7 @@ class RoomdeleteState extends State<Roomdelete> {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("DELETED SUCCESSFULL"),
+            title: new Text("ROOM DELETED SUCCESSFULL"),
             content: new Text(""),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog

@@ -18,6 +18,7 @@ class _loginPageState extends State<loginPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController password = TextEditingController();
   TextEditingController username = TextEditingController();
+  bool _secureText = true;
   bool loading = false;
 
   String status;
@@ -106,6 +107,16 @@ class _loginPageState extends State<loginPage> {
                                       border: OutlineInputBorder(),
                                       labelText: 'Password',
                                       labelStyle: textStyle,
+                                      /* suffixIcon: IconButton(
+                                          icon: Icon(_secureText
+                                              ? Icons.visibility
+                                              : Icons.visibility_off),
+                                          onPressed: () {
+                                            setState(() {
+                                              _secureText = !_secureText;
+                                            });
+                                          },
+                                        )*/
                                     ),
                                     cursorColor: Colors.blueAccent,
                                     style: TextStyle(

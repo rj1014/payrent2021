@@ -162,8 +162,9 @@ class editroomState extends State<editroom> {
                                           border: OutlineInputBorder(),
                                           labelText: 'Monthly Fee',
                                           labelStyle: textStyle,
-                                          icon: Icon(Icons.phone,
-                                              color: Colors.pink),
+                                          icon: FaIcon(
+                                              FontAwesomeIcons.moneyBill,
+                                              color: Colors.yellowAccent),
                                         ),
                                         cursorColor: Colors.blueAccent,
                                         style: TextStyle(
@@ -194,8 +195,8 @@ class editroomState extends State<editroom> {
                                         border: OutlineInputBorder(),
                                         labelText: '1 Month Deposit',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.moneyBill,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -227,8 +228,8 @@ class editroomState extends State<editroom> {
                                         border: OutlineInputBorder(),
                                         labelText: '1 Month Advance',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.moneyBill,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -260,8 +261,8 @@ class editroomState extends State<editroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Security Deposit',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.moneyBill,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -293,8 +294,9 @@ class editroomState extends State<editroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Minimum Water Bill',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(
+                                            FontAwesomeIcons.handHoldingWater,
+                                            color: Colors.blue),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -326,8 +328,8 @@ class editroomState extends State<editroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Minimum Electric Bill',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.bolt,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -359,8 +361,8 @@ class editroomState extends State<editroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Initial Electric Reading',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(FontAwesomeIcons.bolt,
+                                            color: Colors.yellowAccent),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -392,8 +394,9 @@ class editroomState extends State<editroom> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Initial Water Reading',
                                         labelStyle: textStyle,
-                                        icon: Icon(Icons.phone,
-                                            color: Colors.pink),
+                                        icon: FaIcon(
+                                            FontAwesomeIcons.handHoldingWater,
+                                            color: Colors.blue),
                                       ),
                                       cursorColor: Colors.blueAccent,
                                       style: TextStyle(
@@ -474,7 +477,7 @@ class editroomState extends State<editroom> {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Succesfully Updated"),
+            title: new Text("Room Succesfully Updated"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(
