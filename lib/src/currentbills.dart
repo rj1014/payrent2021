@@ -23,6 +23,8 @@ class _CurrentbillState extends State<Currentbill> {
   TextEditingController waterreading = TextEditingController();
   TextEditingController electricreading = TextEditingController();
   TextEditingController duedate = TextEditingController();
+  TextEditingController month = TextEditingController();
+  TextEditingController year = TextEditingController();
 
   @override
   initState() {
@@ -80,6 +82,65 @@ class _CurrentbillState extends State<Currentbill> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  child: Text("Billing Month"),
+                                ),
+                                Container(
+                                  child: Text("Billing Year"),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.45,
+                                  // child: TextField(),
+                                  child: TextFormField(
+                                    // onTap: () {
+                                    //   _selectDate(context);
+                                    // },
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: "Month",
+                                      labelStyle: textStyle,
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.calendarAlt,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    controller: month,
+                                  ),
+                                ),
+                                Container(
+                                  // child: TextField(),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.45,
+                                  child: TextFormField(
+                                    // onTap: () {
+                                    //   _selectDate(context);
+                                    // },
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: "Year",
+                                      labelStyle: textStyle,
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.calendarAlt,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    controller: year,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
                             new Row(
                               children: <Widget>[
                                 Expanded(
@@ -238,6 +299,8 @@ class _CurrentbillState extends State<Currentbill> {
       "currentwaterreading": waterreading.text,
       "currentelectricreading": electricreading.text,
       "duedate": duedate.text,
+      "month": month.text,
+      "year": year.text,
     });
     print(result.body);
     var myInt = int.parse(result.body);

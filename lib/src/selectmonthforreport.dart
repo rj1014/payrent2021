@@ -6,19 +6,15 @@ import 'package:http/http.dart' as http;
 import 'package:payrent/loading/loadingPage.dart';
 import 'package:intl/intl.dart';
 
-class DateReports extends StatefulWidget {
+class MonthReports extends StatefulWidget {
   @override
-  _DateReportsState createState() => new _DateReportsState();
+  _MonthReportsState createState() => new _MonthReportsState();
 }
 
-class _DateReportsState extends State<DateReports> {
+class _MonthReportsState extends State<MonthReports> {
   String value;
   bool loading = false;
-  DateTime _date = new DateTime.now();
-  DateTime _datetext = DateTime.now();
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController enddate = TextEditingController();
-  TextEditingController startdate = TextEditingController();
+  TextEditingController month = TextEditingController();
 
   double paid = 0.0;
   double unpaid = 0.0;
@@ -27,42 +23,6 @@ class _DateReportsState extends State<DateReports> {
   @override
   initState() {
     super.initState();
-  }
-
-  Future<Null> _selectStartDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: new DateTime(2019, 1, 1),
-      lastDate: new DateTime(2022, 1, 1),
-    );
-
-    if (picked != null && picked != _date) {
-      print("Date selected: ${_date.year}/${_date.month}/${_date.day}");
-      setState(() {
-        _date = picked;
-        String b = ("${_date.year}/${_date.month}/${_date.day}");
-        startdate.text = b.toString();
-      });
-    }
-  }
-
-  Future<Null> _selectEndDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: new DateTime(2019, 1, 1),
-      lastDate: new DateTime(2022, 1, 1),
-    );
-
-    if (picked != null && picked != _date) {
-      print("Date selected: ${_date.year}/${_date.month}/${_date.day}");
-      setState(() {
-        _date = picked;
-        String b = ("${_date.year}/${_date.month}/${_date.day}");
-        enddate.text = b.toString();
-      });
-    }
   }
 
   @override
@@ -93,7 +53,17 @@ class _DateReportsState extends State<DateReports> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.03,
+                              height: MediaQuery.of(context).size.height * 0.08,
+                            ),
+                            Container(
+                              child: Text(
+                                "Enter Billing Month",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.005,
                             ),
                             Row(
                               children: <Widget>[
@@ -105,61 +75,16 @@ class _DateReportsState extends State<DateReports> {
                                       alignment: Alignment.center,
                                       height: 40.0,
                                       child: TextFormField(
-                                        onTap: () {
-                                          _selectStartDate(context);
-                                        },
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            startdate.text =
-                                                _datetext.toString();
-                                          }
-                                          return null;
-                                        },
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
-                                          labelText: "Start Date",
+                                          labelText: "Month",
                                           labelStyle: textStyle,
                                           icon: FaIcon(
                                             FontAwesomeIcons.calendarAlt,
                                             color: Colors.white,
                                           ),
                                         ),
-                                        controller: startdate,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 50.0, right: 50.0, top: 10.0),
-                                    child: new Container(
-                                      alignment: Alignment.center,
-                                      height: 40.0,
-                                      child: TextFormField(
-                                        onTap: () {
-                                          _selectEndDate(context);
-                                        },
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            enddate.text = _datetext.toString();
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          labelText: "End Date",
-                                          labelStyle: textStyle,
-                                          icon: FaIcon(
-                                            FontAwesomeIcons.calendarAlt,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        controller: enddate,
+                                        controller: month,
                                       ),
                                     ),
                                   ),
@@ -171,8 +96,7 @@ class _DateReportsState extends State<DateReports> {
                                 // print(startdate.text);
                                 // print(enddate.text);
 
-                                if (startdate.text != "" ||
-                                    enddate.text != "") {
+                                if (month.text != "") {
                                   await getAllBillsAmount();
                                 }
                               },
@@ -212,27 +136,13 @@ class _DateReportsState extends State<DateReports> {
           );
   }
 
-  Future getAllBills() async {
-    var url = Uri.parse("https://payrent000.000webhostapp.com/getAllBills.php");
-    var result = await http.post(
-      url,
-      body: {
-        "startdate": startdate.text,
-        "enddate": enddate.text,
-      },
-    );
-  }
-
   Future getAllBillsAmount() async {
-    print(startdate.text);
-    print(enddate.text);
     var url = Uri.parse(
-        "https://payrent000.000webhostapp.com/get-all-bills-amount.php");
+        "https://payrent000.000webhostapp.com/get-all-bills-amount-2.php");
     var result = await http.post(
       url,
       body: {
-        "startdate": startdate.text.toString(),
-        "enddate": enddate.text.toString(),
+        "month": month.text.toString(),
       },
     );
 

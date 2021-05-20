@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:payrent/src/selectdateforreports.dart';
+import 'package:payrent/src/selectmonthforreport.dart';
 import 'landloardhome.dart';
 
 class report extends StatefulWidget {
@@ -131,45 +132,10 @@ class reportState extends State<report> {
                     },
                     child: Text('Custom Report'),
                   ),
-                  //start/*
-                  MaterialButton(
-                    color: Colors.red,
-                    onPressed: () async {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) {
-                          return Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.90,
-                              color: Colors.white,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Total Unpaid Amount: P $valueUnpaid',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("Close"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    child: Text('Unpaid'),
-                  ),
                   MaterialButton(
                     color: Colors.blue,
                     onPressed: () async {
+                      /*  //start/*
                       showDialog(
                         barrierDismissible: false,
                         context: context,
@@ -182,7 +148,7 @@ class reportState extends State<report> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    'Total Revenue: $valueRevenue',
+                                    'Total Paid Amount: P $valuePaid',
                                     style: TextStyle(
                                       fontSize: 15,
                                     ),
@@ -199,9 +165,85 @@ class reportState extends State<report> {
                           );
                         },
                       );
+                      */ //end*/
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MonthReports()));
                     },
-                    child: Text('Total Revenue'),
+                    child: Text('Monthly Report'),
                   ),
+                  //start/*
+                  // MaterialButton(
+                  //   color: Colors.red,
+                  //   onPressed: () async {
+                  //     showDialog(
+                  //       barrierDismissible: false,
+                  //       context: context,
+                  //       builder: (context) {
+                  //         return Center(
+                  //           child: Container(
+                  //             width: MediaQuery.of(context).size.width * 0.90,
+                  //             color: Colors.white,
+                  //             child: Column(
+                  //               mainAxisSize: MainAxisSize.min,
+                  //               children: [
+                  //                 Text(
+                  //                   'Total Unpaid Amount: P $valueUnpaid',
+                  //                   style: TextStyle(
+                  //                     fontSize: 15,
+                  //                   ),
+                  //                 ),
+                  //                 MaterialButton(
+                  //                   onPressed: () {
+                  //                     Navigator.of(context).pop();
+                  //                   },
+                  //                   child: Text("Close"),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  //   child: Text('Unpaid'),
+                  // ),
+                  // MaterialButton(
+                  //   color: Colors.blue,
+                  //   onPressed: () async {
+                  //     showDialog(
+                  //       barrierDismissible: false,
+                  //       context: context,
+                  //       builder: (context) {
+                  //         return Center(
+                  //           child: Container(
+                  //             width: MediaQuery.of(context).size.width * 0.90,
+                  //             color: Colors.white,
+                  //             child: Column(
+                  //               mainAxisSize: MainAxisSize.min,
+                  //               children: [
+                  //                 Text(
+                  //                   'Total Revenue: $valueRevenue',
+                  //                   style: TextStyle(
+                  //                     fontSize: 15,
+                  //                   ),
+                  //                 ),
+                  //                 MaterialButton(
+                  //                   onPressed: () {
+                  //                     Navigator.of(context).pop();
+                  //                   },
+                  //                   child: Text("Close"),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  //   child: Text('Total Revenue'),
+                  // ),
                   //end*/
                 ],
               ),
@@ -268,60 +310,74 @@ class reportState extends State<report> {
 
                   // );
                   return Card(
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.45,
-                          child: Column(
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Pad Number : ${allReports[index].roomno}",
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              Text(
-                                "Name : ${allReports[index].fname} ${allReports[index].lname}",
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              Text(
-                                "DueDate : ${allReports[index].duedate}",
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              Text(
-                                "Status: ${allReports[index].status}",
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.redAccent),
-                              ),
-                            ],
+                          child: Text(
+                            "Billing Month: ${allReports[index].month} ${allReports[index].year}",
+                            style: TextStyle(fontSize: 20),
                           ),
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.50,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Rent Fee : ${allReports[index].rentfee}",
-                                style: TextStyle(fontSize: 15),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child: Column(
+                                // mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Pad Number : ${allReports[index].roomno}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    "Name : ${allReports[index].fname} ${allReports[index].lname}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    "DueDate : ${allReports[index].duedate}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    "Status: ${allReports[index].status}",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.redAccent),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                "Water Bill : ${allReports[index].waterbill}",
-                                style: TextStyle(fontSize: 15),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.50,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Rent Fee : ${allReports[index].rentfee}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    "Water Bill : ${allReports[index].waterbill}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    "Electric Bill : ${allReports[index].electricbill}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    "Total :  ${allReports[index].totalamount}",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.blueAccent),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                "Electric Bill : ${allReports[index].electricbill}",
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              Text(
-                                "Total :  ${allReports[index].totalamount}",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.blueAccent),
-                              ),
-                            ],
-                          ),
-                        )
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   );
@@ -605,20 +661,21 @@ String allReportsToJson(List<AllReports> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AllReports {
-  AllReports({
-    this.billid,
-    this.userid,
-    this.username,
-    this.duedate,
-    this.status,
-    this.waterbill,
-    this.rentfee,
-    this.electricbill,
-    this.totalamount,
-    this.fname,
-    this.lname,
-    this.roomno,
-  });
+  AllReports(
+      {this.billid,
+      this.userid,
+      this.username,
+      this.duedate,
+      this.status,
+      this.waterbill,
+      this.rentfee,
+      this.electricbill,
+      this.totalamount,
+      this.fname,
+      this.lname,
+      this.roomno,
+      this.month,
+      this.year});
 
   String billid;
   String userid;
@@ -632,6 +689,8 @@ class AllReports {
   String fname;
   String lname;
   String roomno;
+  String month;
+  String year;
 
   factory AllReports.fromJson(Map<String, dynamic> json) => AllReports(
         billid: json["billid"],
@@ -646,6 +705,8 @@ class AllReports {
         fname: json["fname"],
         lname: json["lname"],
         roomno: json["roomno"],
+        month: json["month"],
+        year: json["year"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -661,6 +722,8 @@ class AllReports {
         "fname": fname,
         "lname": lname,
         "roomno": roomno,
+        "month": month,
+        "year": year,
       };
 }
 
