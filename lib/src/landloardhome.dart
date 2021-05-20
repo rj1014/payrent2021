@@ -157,10 +157,55 @@ class landlordhomepagesState extends State<landlordhomepages> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.green[200],
-          title: Text("LandLord"),
-          centerTitle: true,
-          automaticallyImplyLeading: false),
+        backgroundColor: Colors.green[200],
+        title: Text("LandLord"),
+        centerTitle: true,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.green[200],
+              ),
+              accountName: Text(""),
+              accountEmail: Text("Username: Landlord"),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor:
+                    Theme.of(context).platform == TargetPlatform.iOS
+                        ? Colors.green[200]
+                        : Colors.white,
+                child: Text(
+                  "P",
+                  style: TextStyle(fontSize: 40.0),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: FaIcon(FontAwesomeIcons.home),
+              title: Text('Home Page'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => new landlordhomepages()));
+              },
+            ),
+            ListTile(
+              leading: FaIcon(FontAwesomeIcons.powerOff),
+              title: Text('Logout'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => new loginPage()));
+              },
+            ),
+          ],
+        ),
+      ),
       backgroundColor: Colors.grey[600],
       body: Container(
         decoration: BoxDecoration(
@@ -267,12 +312,7 @@ class landlordhomepagesState extends State<landlordhomepages> {
                         ),
                       )
                     ],
-                  )
-                ],
-              ),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
+                  ),
                   Column(
                     children: <Widget>[
                       GestureDetector(
@@ -308,35 +348,6 @@ class landlordhomepagesState extends State<landlordhomepages> {
                       )
                     ],
                   ),
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => loginPage()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: FaIcon(
-                              FontAwesomeIcons.signOutAlt,
-                              size: 60,
-                              color: Colors.black,
-                            )),
-                      ),
-                      Text(
-                        'Logout',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )
                 ],
               )
             ],

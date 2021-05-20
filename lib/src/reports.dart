@@ -93,35 +93,37 @@ class reportState extends State<report> {
                   MaterialButton(
                     color: Colors.green,
                     onPressed: () async {
-                      // showDialog(
-                      //   barrierDismissible: false,
-                      //   context: context,
-                      //   builder: (context) {
-                      //     return Center(
-                      //       child: Container(
-                      //         width: MediaQuery.of(context).size.width * 0.90,
-                      //         color: Colors.white,
-                      //         child: Column(
-                      //           mainAxisSize: MainAxisSize.min,
-                      //           children: [
-                      //             Text(
-                      //               'Total Paid Amount: P $valuePaid',
-                      //               style: TextStyle(
-                      //                 fontSize: 15,
-                      //               ),
-                      //             ),
-                      //             MaterialButton(
-                      //               onPressed: () {
-                      //                 Navigator.of(context).pop();
-                      //               },
-                      //               child: Text("Close"),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     );
-                      //   },
-                      // );
+                      /*  //start/*
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return Center(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.90,
+                              color: Colors.white,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Total Paid Amount: P $valuePaid',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("Close"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                      */ //end*/
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -129,76 +131,113 @@ class reportState extends State<report> {
                     },
                     child: Text('Custom Report'),
                   ),
-                  // MaterialButton(
-                  //   color: Colors.red,
-                  //   onPressed: () async {
-                  //     showDialog(
-                  //       barrierDismissible: false,
-                  //       context: context,
-                  //       builder: (context) {
-                  //         return Center(
-                  //           child: Container(
-                  //             width: MediaQuery.of(context).size.width * 0.90,
-                  //             color: Colors.white,
-                  //             child: Column(
-                  //               mainAxisSize: MainAxisSize.min,
-                  //               children: [
-                  //                 Text(
-                  //                   'Total Unpaid Amount: P $valueUnpaid',
-                  //                   style: TextStyle(
-                  //                     fontSize: 15,
-                  //                   ),
-                  //                 ),
-                  //                 MaterialButton(
-                  //                   onPressed: () {
-                  //                     Navigator.of(context).pop();
-                  //                   },
-                  //                   child: Text("Close"),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         );
-                  //       },
-                  //     );
-                  //   },
-                  //   child: Text('Unpaid'),
-                  // ),
-                  // MaterialButton(
-                  //   color: Colors.blue,
-                  //   onPressed: () async {
-                  //     showDialog(
-                  //       barrierDismissible: false,
-                  //       context: context,
-                  //       builder: (context) {
-                  //         return Center(
-                  //           child: Container(
-                  //             width: MediaQuery.of(context).size.width * 0.90,
-                  //             color: Colors.white,
-                  //             child: Column(
-                  //               mainAxisSize: MainAxisSize.min,
-                  //               children: [
-                  //                 Text(
-                  //                   'Total Revenue: $valueRevenue',
-                  //                   style: TextStyle(
-                  //                     fontSize: 15,
-                  //                   ),
-                  //                 ),
-                  //                 MaterialButton(
-                  //                   onPressed: () {
-                  //                     Navigator.of(context).pop();
-                  //                   },
-                  //                   child: Text("Close"),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         );
-                  //       },
-                  //     );
-                  //   },
-                  //   child: Text('Total Revenue'),
-                  // ),
+                  //start/*
+                  MaterialButton(
+                    color: Colors.red,
+                    onPressed: () async {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return Center(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.90,
+                              color: Colors.white,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Total Paid Amount: P $valueUnpaid',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("Close"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Text('Paid'),
+                  ),
+                  MaterialButton(
+                    color: Colors.red,
+                    onPressed: () async {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return Center(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.90,
+                              color: Colors.white,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Total Unpaid Amount: P $valueUnpaid',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("Close"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Text('Unpaid'),
+                  ),
+                  MaterialButton(
+                    color: Colors.blue,
+                    onPressed: () async {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return Center(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.90,
+                              color: Colors.white,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Total Revenue: $valueRevenue',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("Close"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Text('Total Revenue'),
+                  ),
+                  //end*/
                 ],
               ),
             ),
@@ -660,20 +699,21 @@ class AllReports {
       };
 }
 
-// enum Status { PAID, UNPAID }
+//start/*
+enum Status { PAID, UNPAID }
 
-// final statusValues = EnumValues({"paid": Status.PAID, "unpaid": Status.UNPAID});
+final statusValues = EnumValues({"paid": Status.PAID, "unpaid": Status.UNPAID});
 
-// class EnumValues<T> {
-//   Map<String, T> map;
-//   Map<T, String> reverseMap;
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
 
-//   EnumValues(this.map);
-
-//   Map<T, String> get reverse {
-//     if (reverseMap == null) {
-//       reverseMap = map.map((k, v) => new MapEntry(v, k));
-//     }
-//     return reverseMap;
-//   }
-// }
+  EnumValues(this.map);
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
+}
+//end*/

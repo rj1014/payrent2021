@@ -88,7 +88,7 @@ class _DateReportsState extends State<DateReports> {
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width * 1,
-                        height: MediaQuery.of(context).size.height * 0.25,
+                        height: MediaQuery.of(context).size.height * 0.30,
                         // color: Colors.black,
                         child: Column(
                           children: [
