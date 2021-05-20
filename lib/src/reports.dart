@@ -147,41 +147,6 @@ class reportState extends State<report> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    'Total Paid Amount: P $valueUnpaid',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("Close"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    child: Text('Paid'),
-                  ),
-                  MaterialButton(
-                    color: Colors.red,
-                    onPressed: () async {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) {
-                          return Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.90,
-                              color: Colors.white,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
                                     'Total Unpaid Amount: P $valueUnpaid',
                                     style: TextStyle(
                                       fontSize: 15,

@@ -183,19 +183,6 @@ class landlordhomepagesState extends State<landlordhomepages> {
               ),
             ),
             ListTile(
-              leading: FaIcon(FontAwesomeIcons.home),
-              title: Text('Home Page'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => new landlordhomepages()));
-              },
-            ),
-            ListTile(
               leading: FaIcon(FontAwesomeIcons.powerOff),
               title: Text('Logout'),
               onTap: () {
