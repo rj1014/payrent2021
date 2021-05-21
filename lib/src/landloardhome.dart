@@ -31,6 +31,10 @@ class landlordhomepagesState extends State<landlordhomepages> {
   String totalamount;
   String notf = "";
   List data = [];
+
+  String countTenant;
+  String countRoom;
+  String countVacant;
   landlordhomepagesState();
 
   Future sms() async {
@@ -89,6 +93,26 @@ class landlordhomepagesState extends State<landlordhomepages> {
     }
 
     if (!mounted) return;
+  }
+
+  Future<List> getBuildingStatus() async {
+    var buildingdata;
+    var urls = Uri.parse(
+        "https://payrent000.000webhostapp.com/get-building-status.php");
+    final response = await http.post(urls, body: {});
+
+    print(response.body);
+
+    setState(() {
+      buildingdata = json.decode(response.body);
+
+      countTenant = buildingdata[0]['countTenant'];
+      print(buildingdata[0]['countTenant']);
+      countRoom = buildingdata[1]['countRoom'];
+      print(buildingdata[1]['countRoom']);
+      countVacant = buildingdata[2]['countVacant'];
+      print(buildingdata[2]['countVacant']);
+    });
   }
 
   Future<List> getData() async {
@@ -150,6 +174,7 @@ class landlordhomepagesState extends State<landlordhomepages> {
     var initsetting = InitializationSettings(android: android, iOS: ios);
     flutterLocalNotificationsPlugin.initialize(initsetting);
 
+    getBuildingStatus();
     getData();
   }
 
@@ -207,6 +232,23 @@ class landlordhomepagesState extends State<landlordhomepages> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    child: Text("Tenant: $countTenant",
+                        style: TextStyle(fontSize: 16, color: Colors.white)),
+                  ),
+                  Container(
+                    child: Text("Rooms: $countRoom",
+                        style: TextStyle(fontSize: 16, color: Colors.white)),
+                  ),
+                  Container(
+                    child: Text("Vacant: $countVacant",
+                        style: TextStyle(fontSize: 16, color: Colors.white)),
+                  ),
+                ],
+              ),
               new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
