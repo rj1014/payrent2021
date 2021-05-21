@@ -32,6 +32,9 @@ class landlordhomepagesState extends State<landlordhomepages> {
   String notf = "";
   List data = [];
 
+  String countTenant;
+  String countRoom;
+  String countVacant;
   landlordhomepagesState();
 
   Future sms() async {
@@ -90,6 +93,26 @@ class landlordhomepagesState extends State<landlordhomepages> {
     }
 
     if (!mounted) return;
+  }
+
+  Future<List> getBuildingStatus() async {
+    var buildingdata;
+    var urls = Uri.parse(
+        "https://payrent000.000webhostapp.com/get-building-status.php");
+    final response = await http.post(urls, body: {});
+
+    print(response.body);
+
+    setState(() {
+      buildingdata = json.decode(response.body);
+
+      countTenant = buildingdata[0]['countTenant'];
+      print(buildingdata[0]['countTenant']);
+      countRoom = buildingdata[1]['countRoom'];
+      print(buildingdata[1]['countRoom']);
+      countVacant = buildingdata[2]['countVacant'];
+      print(buildingdata[2]['countVacant']);
+    });
   }
 
   Future<List> getData() async {
@@ -151,6 +174,7 @@ class landlordhomepagesState extends State<landlordhomepages> {
     var initsetting = InitializationSettings(android: android, iOS: ios);
     flutterLocalNotificationsPlugin.initialize(initsetting);
 
+    getBuildingStatus();
     getData();
   }
 
@@ -184,6 +208,38 @@ class landlordhomepagesState extends State<landlordhomepages> {
               ),
             ),
             ListTile(
+              leading: FaIcon(FontAwesomeIcons.houseUser),
+              title: Text('Rooms'),
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => room()));
+              },
+            ),
+            ListTile(
+              leading: FaIcon(FontAwesomeIcons.cashRegister),
+              title: Text('Reports'),
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => report()));
+              },
+            ),
+            ListTile(
+              leading: FaIcon(FontAwesomeIcons.user),
+              title: Text('View Tenants'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ladlordviewacc()));
+              },
+            ),
+            ListTile(
+              leading: FaIcon(FontAwesomeIcons.bellSlash),
+              title: Text('Notifications'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => landlordnotif()));
+              },
+            ),
+            ListTile(
               leading: FaIcon(FontAwesomeIcons.powerOff),
               title: Text('Logout'),
               onTap: () {
@@ -206,182 +262,45 @@ class landlordhomepagesState extends State<landlordhomepages> {
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        'Tenant :',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        'rooms :',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        'vacant :',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )
-                ],
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                child: Text("Number of Tenants: $countTenant",
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
               ),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => room()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: FaIcon(
-                              FontAwesomeIcons.houseUser,
-                              size: 60,
-                              color: Colors.black,
-                            )),
-                      ),
-                      Text(
-                        'Rooms',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => report()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: FaIcon(
-                              FontAwesomeIcons.cashRegister,
-                              size: 60,
-                              color: Colors.black,
-                            )),
-                      ),
-                      Text(
-                        'Reports',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )
-                ],
+              Container(
+                child: Text("Rooms: $countRoom",
+                    style: TextStyle(fontSize: 19, color: Colors.white)),
               ),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ladlordviewacc()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: FaIcon(
-                              FontAwesomeIcons.user,
-                              size: 60,
-                              color: Colors.black,
-                            )),
-                      ),
-                      Text(
-                        'View Tenants',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => landlordnotif()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: Badge(
-                                // ignore: unnecessary_brace_in_string_interps
-                                badgeContent: Text(
-                                  notf,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                child: FaIcon(
-                                  FontAwesomeIcons.bell,
-                                  size: 60,
-                                  color: Colors.black,
-                                ))),
-                      ),
-                      Text(
-                        'Notification',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              )
+              Container(
+                child: Text("Number Of Available Rooms: $countVacant",
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
+              ),
+              Container(
+                child: Text("Number of Occupied Rooms: ",
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
+              ),
+              Container(
+                child: Text(
+                    "Bills Paid Summary for the \n Month of (Current Month&year)",
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
+              ),
+              Container(
+                child: Text("Number of Paid Bills: ",
+                    style: TextStyle(fontSize: 17, color: Colors.white)),
+              ),
+              Container(
+                child: Text("Number of Unpaid Bills: ",
+                    style: TextStyle(fontSize: 17, color: Colors.white)),
+              ),
+              Container(
+                child: Text("Total Collected Bills: ",
+                    style: TextStyle(fontSize: 17, color: Colors.white)),
+              ),
+              Container(
+                child: Text("Total of Uncollected Bills: ",
+                    style: TextStyle(fontSize: 17, color: Colors.white)),
+              ),
             ],
           ),
         ),
