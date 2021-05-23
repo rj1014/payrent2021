@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:badges/badges.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:payrent/src/Login_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,6 +38,14 @@ class landlordhomepagesState extends State<landlordhomepages> {
   String countTenant;
   String countRoom;
   String countVacant;
+
+  String countPaid;
+  String countUnpaid;
+  String totalCollected;
+  String totalUncollected;
+
+  var dateMonth;
+  var dateYear;
   landlordhomepagesState();
 
   Future sms() async {
@@ -95,11 +106,16 @@ class landlordhomepagesState extends State<landlordhomepages> {
     if (!mounted) return;
   }
 
-  Future<List> getBuildingStatus() async {
+  Future<List> getBuildingStatus(var month) async {
     var buildingdata;
     var urls = Uri.parse(
         "https://payrent000.000webhostapp.com/get-building-status.php");
-    final response = await http.post(urls, body: {});
+    final response = await http.post(
+      urls,
+      body: {
+        'month': month.toString(),
+      },
+    );
 
     print(response.body);
 
@@ -107,12 +123,24 @@ class landlordhomepagesState extends State<landlordhomepages> {
       buildingdata = json.decode(response.body);
 
       countTenant = buildingdata[0]['countTenant'];
-      print(buildingdata[0]['countTenant']);
       countRoom = buildingdata[1]['countRoom'];
-      print(buildingdata[1]['countRoom']);
       countVacant = buildingdata[2]['countVacant'];
-      print(buildingdata[2]['countVacant']);
+
+      countPaid = buildingdata[3]['countPaid'];
+      countUnpaid = buildingdata[4]['countUnpaid'];
+      if (buildingdata[5]['totalCollected'] == null) {
+        totalCollected = "0";
+      } else {
+        totalCollected = buildingdata[5]['totalCollected'];
+      }
+      if (buildingdata[6]['totalUncollected'] == null) {
+        totalUncollected = "0";
+      } else {
+        totalUncollected = buildingdata[6]['totalUncollected'];
+      }
     });
+
+    return data = json.decode(response.body);
   }
 
   Future<List> getData() async {
@@ -174,215 +202,697 @@ class landlordhomepagesState extends State<landlordhomepages> {
     var initsetting = InitializationSettings(android: android, iOS: ios);
     flutterLocalNotificationsPlugin.initialize(initsetting);
 
-    getBuildingStatus();
+    dateMonth = DateFormat.MMMM().format(DateTime.now());
+    dateYear = DateTime.now().year;
+
+    getBuildingStatus(dateMonth);
     getData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green[200],
-        title: Text("LandLord"),
-        centerTitle: true,
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.green[200],
-              ),
-              accountName: Text(""),
-              accountEmail: Text("Username: Landlord"),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor:
-                    Theme.of(context).platform == TargetPlatform.iOS
-                        ? Colors.green[200]
-                        : Colors.white,
-                child: Text(
-                  "P",
-                  style: TextStyle(fontSize: 40.0),
+        appBar: AppBar(
+          backgroundColor: Colors.green[200],
+          title: Text("LandLord"),
+          centerTitle: true,
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.green[200],
+                ),
+                accountName: Text(""),
+                accountEmail: Text("Username: Landlord"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor:
+                      Theme.of(context).platform == TargetPlatform.iOS
+                          ? Colors.green[200]
+                          : Colors.white,
+                  child: Text(
+                    "P",
+                    style: TextStyle(fontSize: 40.0),
+                  ),
                 ),
               ),
-            ),
-            ListTile(
-              leading: FaIcon(FontAwesomeIcons.powerOff),
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => new loginPage()));
-              },
-            ),
-          ],
-        ),
-      ),
-      backgroundColor: Colors.grey[600],
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("img/assets/bg.jpeg"),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    child: Text("Tenant: $countTenant",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                  Container(
-                    child: Text("Rooms: $countRoom",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                  Container(
-                    child: Text("Vacant: $countVacant",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                ],
+              ListTile(
+                leading: FaIcon(FontAwesomeIcons.powerOff),
+                title: Text('Logout'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => new loginPage()));
+                },
               ),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => room()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: FaIcon(
-                              FontAwesomeIcons.houseUser,
-                              size: 60,
-                              color: Colors.black,
-                            )),
-                      ),
-                      Text(
-                        'Rooms',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => report()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: FaIcon(
-                              FontAwesomeIcons.cashRegister,
-                              size: 60,
-                              color: Colors.black,
-                            )),
-                      ),
-                      Text(
-                        'Reports',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ladlordviewacc()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: FaIcon(
-                              FontAwesomeIcons.user,
-                              size: 60,
-                              color: Colors.black,
-                            )),
-                      ),
-                      Text(
-                        'View Tenants',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => landlordnotif()));
-                        },
-                        child: CircleAvatar(
-                            backgroundColor: Colors.green[100],
-                            radius: 80,
-                            child: Badge(
-                                // ignore: unnecessary_brace_in_string_interps
-                                badgeContent: Text(
-                                  notf,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                child: FaIcon(
-                                  FontAwesomeIcons.bell,
-                                  size: 60,
-                                  color: Colors.black,
-                                ))),
-                      ),
-                      Text(
-                        'Notification',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              )
             ],
           ),
         ),
-      ),
-    );
+        backgroundColor: Colors.grey[600],
+        body:
+            // FutureBuilder<List>(
+            //   future: getData(),
+            //   builder: (context, snapshot) {
+            //     // if (snapshot.hasError) print(snapshot.error);
+
+            //     print(snapshot.data);
+
+            //     return snapshot.hasData
+            //         ?
+
+            WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: totalCollected == null
+              ? Container(
+                  color: Colors.green[200],
+                  child: Center(
+                    child: SpinKitWave(
+                      color: Colors.green[600],
+                    ),
+                  ),
+                )
+              : Container(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 1,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("img/assets/bg.jpeg"),
+                      fit: BoxFit.fitWidth,
+                      colorFilter: ColorFilter.mode(
+                        Colors.grey.withOpacity(0.3),
+                        BlendMode.dstATop,
+                      ),
+                    ),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.20,
+                              height: MediaQuery.of(context).size.width * 0.20,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "Tenant",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  Text(
+                                    "$countTenant",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height: MediaQuery.of(context).size.width * 0.2,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "Rooms",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  Text(
+                                    "$countRoom",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height: MediaQuery.of(context).size.width * 0.2,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "Vacant",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  Text(
+                                    "$countVacant",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.90,
+                              height: MediaQuery.of(context).size.width * 0.50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    child: Text(
+                                      "$dateMonth $dateYear",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                  ),
+                                  Divider(
+                                    thickness: 3,
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.90,
+                                    height: MediaQuery.of(context).size.width *
+                                        0.165,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              "No. of Paid Bills",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              "$countPaid",
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          // height:
+                                          //     MediaQuery.of(context).size.width * 0.165,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.001,
+                                          child: Container(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              "No. of Unpaid Bills",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              "$countUnpaid",
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    thickness: 2,
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.90,
+                                    height: MediaQuery.of(context).size.width *
+                                        0.165,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              "Total Collected Bills",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              "$totalCollected",
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          // height:
+                                          //     MediaQuery.of(context).size.width * 0.165,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.001,
+                                          child: Container(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              "Total Uncollected Bills",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              "$totalUncollected",
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.width *
+                                        0.03,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => room(),
+                                      ),
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.green[100],
+                                    radius: 70,
+                                    child: FaIcon(
+                                      FontAwesomeIcons.houseUser,
+                                      size: 50,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'Rooms',
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => report(),
+                                      ),
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.green[100],
+                                    radius: 70,
+                                    child: FaIcon(
+                                      FontAwesomeIcons.cashRegister,
+                                      size: 50,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'Reports',
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ladlordviewacc(),
+                                      ),
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.green[100],
+                                    radius: 70,
+                                    child: FaIcon(
+                                      FontAwesomeIcons.user,
+                                      size: 50,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'View Tenants',
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => landlordnotif(),
+                                      ),
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.green[100],
+                                    radius: 70,
+                                    child: Badge(
+                                      badgeContent: Text(
+                                        notf,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.bell,
+                                        size: 50,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'Notification',
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+        )
+        // : new Container(
+        //     color: Colors.green[200],
+        //     child: Center(
+        //       child: SpinKitWave(
+        //         color: Colors.green[600],
+        //       ),
+        //     ),
+        //   );
+
+        // body: Container(
+        //   decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //       image: AssetImage("img/assets/bg.jpeg"),
+        //       fit: BoxFit.cover,
+        //       colorFilter: ColorFilter.mode(
+        //           Colors.grey.withOpacity(0.3), BlendMode.dstATop),
+        //     ),
+        //   ),
+        //   child: Center(
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //       children: <Widget>[
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //           children: [
+        //             Container(
+        //               child: Text("Tenant: $countTenant",
+        //                   style: TextStyle(fontSize: 16, color: Colors.white)),
+        //             ),
+        //             Container(
+        //               child: Text("Rooms: $countRoom",
+        //                   style: TextStyle(fontSize: 16, color: Colors.white)),
+        //             ),
+        //             Container(
+        //               child: Text("Vacant: $countVacant",
+        //                   style: TextStyle(fontSize: 16, color: Colors.white)),
+        //             ),
+        //           ],
+        //         ),
+        //         new Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //           children: <Widget>[
+        //             Column(
+        //               children: <Widget>[
+        //                 GestureDetector(
+        //                   onTap: () {
+        //                     Navigator.push(context,
+        //                         MaterialPageRoute(builder: (context) => room()));
+        //                   },
+        //                   child: CircleAvatar(
+        //                       backgroundColor: Colors.green[100],
+        //                       radius: 80,
+        //                       child: FaIcon(
+        //                         FontAwesomeIcons.houseUser,
+        //                         size: 60,
+        //                         color: Colors.black,
+        //                       )),
+        //                 ),
+        //                 Text(
+        //                   'Rooms',
+        //                   textAlign: TextAlign.center,
+        //                   overflow: TextOverflow.ellipsis,
+        //                   style: TextStyle(
+        //                     fontWeight: FontWeight.bold,
+        //                     color: Colors.white,
+        //                   ),
+        //                 )
+        //               ],
+        //             ),
+        //             Column(
+        //               children: <Widget>[
+        //                 GestureDetector(
+        //                   onTap: () {
+        //                     Navigator.push(
+        //                         context,
+        //                         MaterialPageRoute(
+        //                             builder: (context) => report()));
+        //                   },
+        //                   child: CircleAvatar(
+        //                       backgroundColor: Colors.green[100],
+        //                       radius: 80,
+        //                       child: FaIcon(
+        //                         FontAwesomeIcons.cashRegister,
+        //                         size: 60,
+        //                         color: Colors.black,
+        //                       )),
+        //                 ),
+        //                 Text(
+        //                   'Reports',
+        //                   textAlign: TextAlign.center,
+        //                   overflow: TextOverflow.ellipsis,
+        //                   style: TextStyle(
+        //                     fontWeight: FontWeight.bold,
+        //                     color: Colors.white,
+        //                   ),
+        //                 )
+        //               ],
+        //             )
+        //           ],
+        //         ),
+        //         new Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //           children: <Widget>[
+        //             Column(
+        //               children: <Widget>[
+        //                 GestureDetector(
+        //                   onTap: () {
+        //                     Navigator.push(
+        //                         context,
+        //                         MaterialPageRoute(
+        //                             builder: (context) => ladlordviewacc()));
+        //                   },
+        //                   child: CircleAvatar(
+        //                       backgroundColor: Colors.green[100],
+        //                       radius: 80,
+        //                       child: FaIcon(
+        //                         FontAwesomeIcons.user,
+        //                         size: 60,
+        //                         color: Colors.black,
+        //                       )),
+        //                 ),
+        //                 Text(
+        //                   'View Tenants',
+        //                   textAlign: TextAlign.center,
+        //                   overflow: TextOverflow.ellipsis,
+        //                   style: TextStyle(
+        //                     fontWeight: FontWeight.bold,
+        //                     color: Colors.white,
+        //                   ),
+        //                 )
+        //               ],
+        //             ),
+        //             Column(
+        //               children: <Widget>[
+        //                 GestureDetector(
+        //                   onTap: () {
+        //                     Navigator.push(
+        //                         context,
+        //                         MaterialPageRoute(
+        //                             builder: (context) => landlordnotif()));
+        //                   },
+        //                   child: CircleAvatar(
+        //                       backgroundColor: Colors.green[100],
+        //                       radius: 80,
+        //                       child: Badge(
+        //                           // ignore: unnecessary_brace_in_string_interps
+        //                           badgeContent: Text(
+        //                             notf,
+        //                             style: TextStyle(fontSize: 20),
+        //                           ),
+        //                           child: FaIcon(
+        //                             FontAwesomeIcons.bell,
+        //                             size: 60,
+        //                             color: Colors.black,
+        //                           ))),
+        //                 ),
+        //                 Text(
+        //                   'Notification',
+        //                   textAlign: TextAlign.center,
+        //                   overflow: TextOverflow.ellipsis,
+        //                   style: TextStyle(
+        //                     fontWeight: FontWeight.bold,
+        //                     color: Colors.white,
+        //                   ),
+        //                 )
+        //               ],
+        //             ),
+        //           ],
+        //         )
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        );
   }
 }
